@@ -52,6 +52,13 @@ export default {
             </q-item-section>
             <q-item-section class="menu-text"> Wiki </q-item-section>
           </q-item>
+
+          <q-item class="q-item" active clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon class="menu-icon" name="person"></q-icon>
+            </q-item-section>
+            <q-item-section class="menu-text"> Account </q-item-section>
+          </q-item>
         </q-list>
       </q-drawer>
 
