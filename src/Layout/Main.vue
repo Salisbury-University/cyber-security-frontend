@@ -27,30 +27,30 @@ export default {
         mini-to-overlay
         :width="200"
         :breakpoint="500"
+        class="menu-bg"
       >
         <q-list padding>
-          <q-item clickable v-ripple>
+          <q-item class="q-item" active clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="home" />
+              <q-icon class="menu-icon" name="home" />
             </q-item-section>
 
-            <q-item-section> Home </q-item-section>
+            <q-item-section class="menu-text"> Home </q-item-section>
           </q-item>
 
-          <q-item active clickable v-ripple>
+          <q-item class="q-item" active clickable v-ripple>
             <q-item-section avatar>
-              <q-icon style="color: #25274d" name="rocket_launch"></q-icon>
+              <q-icon class="menu-icon" name="rocket_launch"></q-icon>
             </q-item-section>
 
-            <q-item-section style="color: #25274d"> Challenges </q-item-section>
+            <q-item-section class="menu-text"> Challenges </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple>
+          <q-item class="q-item" active clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="feed"></q-icon>
+              <q-icon class="menu-icon" name="feed"></q-icon>
             </q-item-section>
-
-            <q-item-section> Wiki </q-item-section>
+            <q-item-section class="menu-text"> Wiki </q-item-section>
           </q-item>
         </q-list>
       </q-drawer>
@@ -62,4 +62,18 @@ export default {
   </div>
 </template>
 
-<style lang="sass"></style>
+<style lang="sass">
+@import 'src/quasar-variables.sass'
+
+.menu-bg
+  background-color: $primary
+
+.menu-text
+  color: $accent
+
+.menu-icon
+  color: $accent
+
+.q-item:hover
+  background-color: $dark
+</style>
