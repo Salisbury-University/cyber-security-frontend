@@ -1,7 +1,9 @@
-<script setup lang="ts">
-import NavBar from "../components/NavBar.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <NavBar />
+  <q-page>
+    <div>
+      <h1>This is the example of how page should be formatted</h1>
+    </div>
+  </q-page>
 </template>
