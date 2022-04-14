@@ -1,18 +1,8 @@
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from "vue";
 
-export default {
-  /**
-   * Sets state of drawer and nav bar view
-   * @returns drawer closed and nav bar minimized
-   */
-  setup() {
-    return {
-      drawer: ref(false),
-      miniState: ref(true),
-    };
-  },
-};
+const drawer = ref(false);
+const miniState = ref(true);
 </script>
 
 <template>
