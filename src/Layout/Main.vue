@@ -43,7 +43,13 @@ const miniState = ref(true);
             <q-item-section class="menu-text"> Wiki </q-item-section>
           </q-item>
 
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item
+            class="q-item"
+            active
+            clickable
+            @click="persistent = true"
+            v-ripple
+          >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="person"></q-icon>
             </q-item-section>
