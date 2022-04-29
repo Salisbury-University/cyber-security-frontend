@@ -1,11 +1,7 @@
-<script setup lang="ts">
-import Modal from "../components/Modal.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <q-page>
-    <div>
-      <Modal />
-    </div>
+    <div></div>
   </q-page>
 </template>

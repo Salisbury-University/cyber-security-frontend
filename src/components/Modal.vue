@@ -1,16 +1,24 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const persistent = ref(false);
-const text = ref("");
+const username = ref("");
+const password = ref("");
+
+const props = defineProps({
+  ["loginModal"]: {
+    type: Boolean,
+  },
+
+  ["value"]: {
+    type: Boolean,
+  },
+});
 </script>
 
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <q-btn label="Click me" color="secondary" @click="persistent = true" />
-
     <q-dialog
-      v-model="persistent"
+      v-model="loginModal"
       persistent
       transition-show="scale"
       transition-hide="scale"
@@ -24,14 +32,14 @@ const text = ref("");
           <q-input
             rounded
             standout
-            v-model="text"
+            v-model="username"
             label="Username"
             class="input"
           ></q-input>
           <q-input
             rounded
             standout
-            v-model="text"
+            v-model="password"
             label="Password"
             class="input"
           ></q-input>
@@ -43,8 +51,8 @@ const text = ref("");
             padding="xs lg"
             rounded
             label="Sign in"
-            v-close-popup
             class="btn-bg"
+            @click=""
           />
         </q-card-actions>
       </q-card>

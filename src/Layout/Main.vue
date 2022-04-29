@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import Modal from "../components/Modal.vue";
 
 const drawer = ref(false);
 const miniState = ref(true);
+const showLogin = ref(false);
 </script>
 
 <template>
@@ -47,8 +49,8 @@ const miniState = ref(true);
             class="q-item"
             active
             clickable
-            @click="persistent = true"
             v-ripple
+            @click="showLogin = !showLogin"
           >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="person"></q-icon>
@@ -57,6 +59,8 @@ const miniState = ref(true);
           </q-item>
         </q-list>
       </q-drawer>
+
+      <Modal :loginModal="showLogin" />
 
       <q-page-container>
         <router-view />
