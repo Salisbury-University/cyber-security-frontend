@@ -5,6 +5,13 @@ import Modal from "../components/Modal.vue";
 const drawer = ref(false);
 const miniState = ref(true);
 const showLogin = ref(false);
+
+/**
+ * Shows and hides login modal
+ */
+function toggleLogin() {
+  showLogin.value = !showLogin.value;
+}
 </script>
 
 <template>
@@ -18,7 +25,7 @@ const showLogin = ref(false);
         @mouseout="miniState = true"
         mini-to-overlay
         :width="200"
-        :breakpoint="500"
+        :breakpoint="400"
         class="menu-bg"
       >
         <q-list padding>
@@ -60,7 +67,7 @@ const showLogin = ref(false);
         </q-list>
       </q-drawer>
 
-      <Modal :loginModal="showLogin" />
+      <Modal :loginModal="showLogin" @event="toggleLogin()" />
 
       <q-page-container>
         <router-view />

@@ -8,10 +8,6 @@ const props = defineProps({
   ["loginModal"]: {
     type: Boolean,
   },
-
-  ["value"]: {
-    type: Boolean,
-  },
 });
 </script>
 
@@ -31,17 +27,19 @@ const props = defineProps({
         <q-card-section>
           <q-input
             rounded
-            standout
+            standout="bg-focusedInput"
             v-model="username"
             label="Username"
             class="input"
+            required
           ></q-input>
           <q-input
             rounded
-            standout
+            standout="bg-focusedInput"
             v-model="password"
             label="Password"
             class="input"
+            required
           ></q-input>
         </q-card-section>
 
@@ -52,7 +50,7 @@ const props = defineProps({
             rounded
             label="Sign in"
             class="btn-bg"
-            @click=""
+            @click="$emit('event')"
           />
         </q-card-actions>
       </q-card>
@@ -79,4 +77,7 @@ const props = defineProps({
   margin: 2px 25px 50px 25px
   background-color: $accent
   border-radius: 28px
+
+.bg-focusedInput
+  background: $dark !important
 </style>
