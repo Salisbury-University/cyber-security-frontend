@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Modal from "../components/Modal.vue";
+import Card from "../components/Card.vue";
 
 const drawer = ref(false);
 const miniState = ref(true);
@@ -23,7 +24,6 @@ function toggleLogin() {
         :mini="miniState"
         @mouseover="miniState = false"
         @mouseout="miniState = true"
-        mini-to-overlay
         :width="200"
         :breakpoint="400"
         class="menu-bg"
@@ -70,6 +70,10 @@ function toggleLogin() {
       <Modal :loginModal="showLogin" @event="toggleLogin()" />
 
       <q-page-container>
+        <q-page padding>
+          <Card />
+          <Card />
+        </q-page>
         <router-view />
       </q-page-container>
     </q-layout>
