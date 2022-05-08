@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useAuthStore } from "../stores/auth";
 
-const username = ref("");
-const password = ref("");
+const useAuth = useAuthStore();
+
+useAuth.modalEventListener();
 
 const props = defineProps({
   ["loginModal"]: {
@@ -19,48 +21,71 @@ const props = defineProps({
       transition-show="scale"
       transition-hide="scale"
     >
-      <q-card class="login-bg" style="width: 400px; height: 500px">
+      <q-card
+        class="login-bg"
+        style="width: 400px; height: 500px; overflow: hidden"
+      >
+        <q-card-section>
+          <q-btn
+            class="close-icon"
+            size="lg"
+            icon="close"
+            flat
+            round
+            dense
+            @click="useAuth.setShowLogin(false)"
+          />
+        </q-card-section>
         <q-card-section>
           <div class="login-txt">Log In</div>
         </q-card-section>
 
         <q-card-section>
-          <q-input
-            rounded
-            standout="bg-focusedInput"
-            v-model="username"
-            label="Username"
-            class="input"
-            required
-          ></q-input>
-          <q-input
-            rounded
-            standout="bg-focusedInput"
-            v-model="password"
-            label="Password"
-            class="input"
-            required
-          ></q-input>
+          <q-form @submit="useAuth.login()">
+            <q-input
+              rounded
+              standout="bg-focusedInput"
+              v-model="useAuth.nonpersistence.username"
+              label="Username"
+              class="input"
+              required
+            >
+            </q-input>
+            <q-input
+              rounded
+              standout="bg-focusedInput"
+              v-model="useAuth.nonpersistence.password"
+              label="Password"
+              class="input"
+              required
+            >
+            </q-input>
+            <div align="center">
+              <q-btn
+                id="login-submit"
+                type="submit"
+                size="20px"
+                padding="xs lg"
+                rounded
+                class="btn-bg"
+                ><span v-if="!useAuth.getLoginAnimation">sign-in</span>
+                <q-spinner v-if="useAuth.getLoginAnimation"></q-spinner
+              ></q-btn>
+            </div>
+          </q-form>
         </q-card-section>
 
-        <q-card-actions align="center">
-          <q-btn
-            size="20px"
-            padding="xs lg"
-            rounded
-            label="Sign in"
-            class="btn-bg"
-            @click="$emit('event')"
-          />
-        </q-card-actions>
+        <q-card-section>
+          <div id="login-fail" class="login-fail">
+            Username or password incorrect
+          </div>
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
 </template>
 
 <style lang="sass">
-@import 'src/quasar-variables.sass'
-
 .login-bg
   background-color: $primary
 
@@ -68,6 +93,17 @@ const props = defineProps({
   color: $accent
   text-align: center
   font-size: 45px
+
+.login-fail
+  transition-duration: 1s
+  color: $negative
+  text-align: center
+  font-size: 25px
+  opacity: 0
+
+.close-icon
+  float: right
+  z-index: 5
 
 .btn-bg
   background-color: $info
@@ -79,5 +115,5 @@ const props = defineProps({
   border-radius: 28px
 
 .bg-focusedInput
-  background: $dark !important
+  background: $secondary !important
 </style>

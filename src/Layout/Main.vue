@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Modal from "../components/Modal.vue";
+import { useAuthStore } from "../stores/auth";
+
+const useAuth = useAuthStore();
 
 const drawer = ref(false);
 const miniState = ref(true);
@@ -57,7 +60,7 @@ function toggleLogin() {
             active
             clickable
             v-ripple
-            @click="showLogin = !showLogin"
+            @click="useAuth.setShowLogin(true)"
           >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="person"></q-icon>
@@ -67,7 +70,7 @@ function toggleLogin() {
         </q-list>
       </q-drawer>
 
-      <Modal :loginModal="showLogin" @event="toggleLogin()" />
+      <Modal :loginModal="useAuth.getShowLogin" />
 
       <q-page-container>
         <router-view />
@@ -77,8 +80,6 @@ function toggleLogin() {
 </template>
 
 <style lang="sass">
-@import 'src/quasar-variables.sass'
-
 .menu-bg
   background-color: $primary
 
