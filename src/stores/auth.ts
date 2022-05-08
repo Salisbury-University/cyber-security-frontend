@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
 import http from "../http";
-import ModalVue from "../components/Modal.vue";
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
@@ -23,25 +22,31 @@ export const useAuthStore = defineStore("auth", {
 
   getters: {
     /**
-     * Gets the showLogin from state
+     * Gets the showLogin value from state
      *
      * @param {any} state all state information
-     * @return {boolean} showLogin
+     * @return {boolean} showLogin state
      */
     getShowLogin(state): boolean {
       return state.nonpersistence.showLogin;
     },
 
     /**
-     * Gets the token from state
+     * Gets the token value from state
      *
      * @param {any} state all state information
-     * @return {string} token
+     * @return {string} token state
      */
     getToken(state): string {
       return state.persistence.token;
     },
 
+    /**
+     * Gets loginAnimation value from state
+     *
+     * @param {any} state all sate information
+     * @return {boolean} loginAnimation state
+     */
     getLoginAnimation(state): boolean {
       return state.nonpersistence.loginAnimation;
     },
@@ -103,10 +108,18 @@ export const useAuthStore = defineStore("auth", {
       );
     },
 
+    /**
+     * Sets showLogin state
+     *
+     * @param {boolean} bool boolean to determine if login should be shown
+     */
     setShowLogin(bool: boolean): void {
       this.nonpersistence.showLogin = bool;
     },
 
+    /**
+     * Modal event listener to exit on esc
+     */
     modalEventListener(): void {
       document.onkeydown = (e) => {
         // Exit with esc screen on login modal
@@ -118,6 +131,11 @@ export const useAuthStore = defineStore("auth", {
       };
     },
 
+    /**
+     * Sets login attempt spinning animation
+     *
+     * @param {boolean} bool boolean to determine page running animation
+     */
     setLoginAnimation(bool: boolean): void {
       this.nonpersistence.loginAnimation = bool;
     },

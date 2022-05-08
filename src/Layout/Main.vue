@@ -7,14 +7,6 @@ const useAuth = useAuthStore();
 
 const drawer = ref(false);
 const miniState = ref(true);
-const showLogin = ref(false);
-
-/**
- * Shows and hides login modal
- */
-function toggleLogin() {
-  showLogin.value = !showLogin.value;
-}
 </script>
 
 <template>
@@ -32,7 +24,7 @@ function toggleLogin() {
         class="menu-bg"
       >
         <q-list padding>
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item class="q-item" active clickable v-ripple to="/">
             <q-item-section avatar>
               <q-icon class="menu-icon" name="home" />
             </q-item-section>
@@ -40,7 +32,7 @@ function toggleLogin() {
             <q-item-section class="menu-text"> Home </q-item-section>
           </q-item>
 
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item class="q-item" active clickable v-ripple to="/challenges">
             <q-item-section avatar>
               <q-icon class="menu-icon" name="rocket_launch"></q-icon>
             </q-item-section>
@@ -48,7 +40,7 @@ function toggleLogin() {
             <q-item-section class="menu-text"> Challenges </q-item-section>
           </q-item>
 
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item class="q-item" active clickable v-ripple to="/wiki">
             <q-item-section avatar>
               <q-icon class="menu-icon" name="feed"></q-icon>
             </q-item-section>

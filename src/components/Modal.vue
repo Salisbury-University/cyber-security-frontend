@@ -43,11 +43,13 @@ const props = defineProps({
         <q-card-section>
           <q-form @submit="useAuth.login()">
             <q-input
+              id="login-username"
               rounded
               standout="bg-focusedInput"
               v-model="useAuth.nonpersistence.username"
               label="Username"
               class="input"
+              autofocus
               required
             >
             </q-input>
