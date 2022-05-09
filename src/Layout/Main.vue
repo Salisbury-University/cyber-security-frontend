@@ -52,7 +52,13 @@ const miniState = ref(true);
             active
             clickable
             v-ripple
-            @click="useAuth.setShowLogin(true)"
+            @click="
+              () => {
+                if (!useAuth.getLoggedIn) {
+                  useAuth.setShowLogin(true);
+                }
+              }
+            "
           >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="person"></q-icon>

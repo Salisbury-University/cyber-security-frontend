@@ -16,6 +16,7 @@ export const useAuthStore = defineStore("auth", {
         header: {
           Authorization: "",
         },
+        loggedIn: false,
       }),
     };
   },
@@ -44,11 +45,21 @@ export const useAuthStore = defineStore("auth", {
     /**
      * Gets loginAnimation value from state
      *
-     * @param {any} state all sate information
+     * @param {any} state all state information
      * @return {boolean} loginAnimation state
      */
     getLoginAnimation(state): boolean {
       return state.nonpersistence.loginAnimation;
+    },
+
+    /**
+     * Gets loggedIn value from store
+     *
+     * @param {any} state all state information
+     * @return {boolean} Token logged in
+     */
+    getLoggedIn(state): boolean {
+      return state.persistence.loggedIn;
     },
   },
 
@@ -69,12 +80,13 @@ export const useAuthStore = defineStore("auth", {
       // Makes axios call
       http()
         .post("/api/v1/auth/login", {
-          uid: this.nonpersistence.username,
+          username: this.nonpersistence.username,
           password: this.nonpersistence.password,
         })
         .then((res) => {
           doc!.removeAttribute("disabled");
           this.setLoginAnimation(false);
+          this.setLoggedIn(true);
 
           console.log(this.getLoginAnimation);
           docFailed!.style.opacity = "0";
@@ -82,13 +94,14 @@ export const useAuthStore = defineStore("auth", {
           this.setShowLogin(false);
         })
         .catch((err) => {
+          console.log(this.nonpersistence.username);
+          console.log(this.nonpersistence.password);
           setTimeout(() => {
             doc!.removeAttribute("disabled");
             this.setLoginAnimation(false);
           }, 2000);
 
           docFailed!.style.opacity = "1";
-          console.log(err);
         });
 
       // Make it so that it can be submitted only once every second
@@ -142,6 +155,15 @@ export const useAuthStore = defineStore("auth", {
      */
     setLoginAnimation(bool: boolean): void {
       this.nonpersistence.loginAnimation = bool;
+    },
+
+    /**
+     * Set loggin bool for login modal
+     *
+     * @param {boolean} bool boolean to determine user is logged in
+     */
+    setLoggedIn(bool: boolean): void {
+      this.persistence.loggedIn = bool;
     },
   },
 });
