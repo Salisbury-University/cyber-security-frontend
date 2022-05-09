@@ -71,7 +71,7 @@ const props = defineProps({
                 rounded
                 class="btn-bg"
                 ><span v-if="!useAuth.getLoginAnimation">sign-in</span>
-                <q-spinner v-if="useAuth.getLoginAnimation"></q-spinner
+                <q-spinner v-if="useAuth.getLoginAnimation"> </q-spinner
               ></q-btn>
             </div>
           </q-form>

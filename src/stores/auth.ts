@@ -73,21 +73,25 @@ export const useAuthStore = defineStore("auth", {
           password: this.nonpersistence.password,
         })
         .then((res) => {
-          docFailed!.style.opacity = "0";
+          doc!.removeAttribute("disabled");
           this.setLoginAnimation(false);
+
+          console.log(this.getLoginAnimation);
+          docFailed!.style.opacity = "0";
           console.log(res.data);
           this.setShowLogin(false);
         })
         .catch((err) => {
-          this.setLoginAnimation(false);
+          setTimeout(() => {
+            doc!.removeAttribute("disabled");
+            this.setLoginAnimation(false);
+          }, 2000);
+
           docFailed!.style.opacity = "1";
           console.log(err);
         });
 
       // Make it so that it can be submitted only once every second
-      setTimeout(() => {
-        doc!.removeAttribute("disabled");
-      }, 2000);
     },
 
     /**
