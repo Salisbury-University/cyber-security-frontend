@@ -72,7 +72,6 @@ function toggleLogin() {
       <q-page-container>
         <q-page padding>
           <Card />
-          <Card />
         </q-page>
         <router-view />
       </q-page-container>
