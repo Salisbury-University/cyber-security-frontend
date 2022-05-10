@@ -57,7 +57,7 @@ export const useChallengeStore = defineStore("challenge", {
     },
 
     /**
-     * Gets picture for challenge from state
+     * Gets image for challenge from state
      *
      * @param {any} state all state information
      * @returns {string} image state
@@ -67,5 +67,55 @@ export const useChallengeStore = defineStore("challenge", {
     },
   },
 
-  actions: {},
+  actions: {
+    /**
+     * Set challenge name
+     *
+     * @param {string} name name of challenge
+     */
+    setChallengeName(name: string): void {
+      this.persistence.name = name;
+    },
+
+    /**
+     * Set time limit to complete challenge
+     *
+     * @param {string} limit time limit for challenge
+     */
+    setTimeLimit(limit: string): void {
+      this.persistence.timeLimit = limit;
+    },
+
+    /**
+     * Set challenge difficulty
+     *
+     * @param {number} level difficulty for challenge
+     */
+    setDifficulty(level: number): void {
+      this.persistence.difficulty = level;
+    },
+
+    /**
+     * Set challenge description
+     *
+     * @param {string} descr description of challenge
+     */
+    setDescription(descr: string): void {
+      this.persistence.description = descr;
+    },
+
+    /**
+     * Set challenge image
+     *
+     * @param {string} imgUrl url to challenge image
+     */
+    setImage(imgUrl: string): void {
+      this.persistence.image = imgUrl;
+    },
+
+    // http()
+    //   .post("", {
+
+    //   })
+  },
 });

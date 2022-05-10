@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useChallengeStore } from "../stores/challenge";
 
 const slide = ref("style");
 const lorem = "Lorem ipsum Itaque voluptatem totam, libero ab nemo.";
+const useChallenge = useChallengeStore();
 
 const cardProp = defineProps({
   // name of challenge
@@ -30,6 +32,9 @@ const cardProp = defineProps({
     type: Image,
   },
 });
+
+// example to check that challenge store works
+useChallenge.setChallengeName("Parsing Markdown");
 </script>
 
 <template>
@@ -48,9 +53,9 @@ const cardProp = defineProps({
       class="card"
     >
       <q-carousel-slide name="style" class="column no-wrap flex-center">
-        <q-icon name="style" size="56px" />
+        <q-icon name="" size="56px" />
         <div class="q-mt-md text-center">
-          {{ lorem }}
+          {{ useChallenge.getChallengeName }}
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="tv" class="column no-wrap flex-center">
