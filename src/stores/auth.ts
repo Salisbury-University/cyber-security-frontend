@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useLocalStorage } from "@vueuse/core";
+import { useStorage } from "@vueuse/core";
 import http from "../http";
 
 export const useAuthStore = defineStore("auth", {
@@ -11,7 +11,7 @@ export const useAuthStore = defineStore("auth", {
         showLogin: false,
         loginAnimation: false,
       },
-      persistence: useLocalStorage("auth", {
+      persistence: useStorage("auth", {
         token: "",
         header: {
           Authorization: "",

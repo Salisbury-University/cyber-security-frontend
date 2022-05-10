@@ -7,6 +7,8 @@ const useAuth = useAuthStore();
 
 const drawer = ref(false);
 const miniState = ref(true);
+
+const bio = ref("Default bio\n CyberSecurity Team");
 </script>
 
 <template>
@@ -19,11 +21,56 @@ const miniState = ref(true);
         @mouseover="miniState = false"
         @mouseout="miniState = true"
         mini-to-overlay
-        :width="200"
+        :width="400"
         :breakpoint="400"
         class="menu-bg"
       >
         <q-list padding>
+          <q-item style="height: 40vh; overflow: hidden">
+            <div style="flex-direction: column; justify-content: center">
+              <q-item-section
+                avatar
+                class=""
+                style="justify-content: center; vertical-align: top"
+              >
+                <q-icon
+                  v-if="!useAuth.persistence.loggedIn"
+                  class="menu-icon"
+                  name="account_circle"
+                />
+                <q-icon class="menu-icon" v-if="useAuth.persistence.loggedIn">
+                  <img src="../assets/logo.png" />
+                </q-icon>
+              </q-item-section>
+            </div>
+            <q-item-section class="menu-text">
+              <div style="flex-direction: column; justify-content: center">
+                <div style="flex-direction: row">
+                  <q-icon
+                    v-if="!useAuth.persistence.loggedIn"
+                    class="menu-icon"
+                    size="20vh"
+                    name="account_circle"
+                  />
+                  <q-icon
+                    class="menu-icon"
+                    size="20vh"
+                    v-if="useAuth.persistence.loggedIn"
+                  >
+                    <img
+                      v-if="useAuth.persistence.loggedIn"
+                      class="avatar-size"
+                      src="../assets/logo.png"
+                    />
+                  </q-icon>
+                </div>
+                <div style="flex-direction: row">
+                  <pre>{{ bio }}</pre>
+                </div>
+              </div>
+            </q-item-section>
+          </q-item>
+
           <q-item class="q-item" active clickable v-ripple to="/">
             <q-item-section avatar>
               <q-icon class="menu-icon" name="home" />
@@ -89,4 +136,8 @@ const miniState = ref(true);
 
 .q-item:hover
   background-color: $dark
+
+.avatar-size
+  height: 20vh
+  width: 20vh
 </style>
