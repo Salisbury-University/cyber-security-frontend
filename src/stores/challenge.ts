@@ -11,6 +11,11 @@ export const useChallengeStore = defineStore("challenge", {
         difficulty: "",
         description: "",
         image: "",
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw",
+        header: {
+          Authorization: "",
+        },
       }),
     };
   },
@@ -113,9 +118,29 @@ export const useChallengeStore = defineStore("challenge", {
       this.persistence.image = imgUrl;
     },
 
-    // http()
-    //   .post("", {
+    /**
+     * Sets the authorization header with token information
+     */
+    setAuthorizationHeader(): void {
+      this.persistence.header.Authorization = "Bearer ".concat(
+        this.persistence.token
+      );
+    },
 
-    //   })
+    /**
+     * Grabs info for preview of challenge
+     */
+    setChallenge(): void {
+      // axios call
+      http()
+        .get("/api/v1/exercise", {
+          headers: {
+            Authorization: this.persistence.token,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
 });

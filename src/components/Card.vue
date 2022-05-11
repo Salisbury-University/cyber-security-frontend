@@ -33,6 +33,8 @@ const cardProp = defineProps({
   },
 });
 
+useChallenge.setChallenge();
+
 // example to check that challenge store works
 useChallenge.setChallengeName("Parsing Markdown");
 </script>
@@ -52,9 +54,9 @@ useChallenge.setChallengeName("Parsing Markdown");
       bordered
       class="card"
     >
-      <q-carousel-slide name="style" class="column no-wrap flex-center">
+      <q-carousel-slide name="style">
         <q-icon name="" size="56px" />
-        <div class="q-mt-md text-center">
+        <div class="challenge-name">
           {{ useChallenge.getChallengeName }}
         </div>
       </q-carousel-slide>
@@ -91,4 +93,11 @@ useChallenge.setChallengeName("Parsing Markdown");
   color: white
   border-radius: 23px
   box-shadow: 0px 1px 2px black
+
+.challenge-name
+  font-weight: bold
+  font-size: 22px
+  display: flex
 </style>
+
+// vertical-align: top // text-align: left
