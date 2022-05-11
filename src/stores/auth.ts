@@ -17,7 +17,7 @@ export const useAuthStore = defineStore("auth", {
           Authorization: "",
         },
         loggedIn: false,
-      }),
+      }) as any,
     };
   },
 
@@ -82,6 +82,9 @@ export const useAuthStore = defineStore("auth", {
         .post("/api/v1/auth/login", {
           username: this.nonpersistence.username,
           password: this.nonpersistence.password,
+          Headers: {
+            Authorization: "Bearer " + this.persistence.token,
+          },
         })
         .then((res) => {
           doc!.removeAttribute("disabled");

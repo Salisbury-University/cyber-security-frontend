@@ -55,6 +55,7 @@ const props = defineProps({
             </q-input>
             <q-input
               rounded
+              type="password"
               standout="bg-focusedInput"
               v-model="useAuth.nonpersistence.password"
               label="Password"
