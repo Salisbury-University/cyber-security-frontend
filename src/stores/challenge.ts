@@ -11,8 +11,7 @@ export const useChallengeStore = defineStore("challenge", {
         difficulty: "",
         description: "",
         image: "",
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw",
+        token: "",
         header: {
           Authorization: "",
         },
@@ -128,14 +127,25 @@ export const useChallengeStore = defineStore("challenge", {
     },
 
     /**
+     * Sets the token information
+     */
+    setToken(): void {
+      this.persistence.token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
+    },
+
+    /**
      * Grabs info for preview of challenge
      */
     setChallenge(): void {
+      this.setToken();
+      this.setAuthorizationHeader();
+
       // axios call
       http()
-        .get("/api/v1/exercise", {
+        .get("/api/v1/exercises", {
           headers: {
-            Authorization: this.persistence.token,
+            Authorization: this.persistence.header.Authorization,
           },
         })
         .then((res) => {

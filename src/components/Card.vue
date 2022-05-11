@@ -33,10 +33,10 @@ const cardProp = defineProps({
   },
 });
 
-useChallenge.setChallenge();
+//useChallenge.setChallenge();
 
 // example to check that challenge store works
-useChallenge.setChallengeName("Parsing Markdown");
+//useChallenge.setChallengeName("Parsing Markdown");
 </script>
 
 <template>
@@ -56,27 +56,120 @@ useChallenge.setChallengeName("Parsing Markdown");
     >
       <q-carousel-slide name="style">
         <q-icon name="" size="56px" />
-        <div class="challenge-name">
-          {{ useChallenge.getChallengeName }}
+        <!-- section for challenge name  -->
+        <div class="challenge-name">How to parse Markdown</div>
+
+        <!-- section for challenge image  -->
+        <div>
+          <img
+            class="img"
+            src="/src/assets/markdown.png"
+            width="300"
+            height="180"
+          />
+        </div>
+
+        <!-- section for challenge details  -->
+        <div class="challenge-info">
+          <p>
+            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
+          </p>
+          <p>Time Limit: 4 hrs</p>
+          <p>
+            Description: Insert challenge <br />
+            description here
+          </p>
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="tv" class="column no-wrap flex-center">
-        <q-icon name="live_tv" size="56px" />
-        <div class="q-mt-md text-center">
-          {{ lorem }}
+        <q-icon name="" size="56px" />
+        <!-- section for challenge name  -->
+        <div class="challenge-name">How to parse Markdown</div>
+
+        <!-- section for challenge image  -->
+        <div>
+          <img
+            class="img"
+            src="/src/assets/markdown.png"
+            width="300"
+            height="180"
+          />
         </div>
+
+        <!-- section for challenge details  -->
+        <div class="challenge-info">
+          <p>
+            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
+          </p>
+          <p>Time Limit: 4 hrs</p>
+          <p>
+            Description: Insert challenge <br />
+            description here
+          </p>
+        </div>
+        <!-- <div class="q-mt-md text-center">
+          {{ lorem }}
+        </div> -->
       </q-carousel-slide>
       <q-carousel-slide name="layers" class="column no-wrap flex-center">
-        <q-icon name="layers" size="56px" />
-        <div class="q-mt-md text-center">
-          {{ lorem }}
+        <q-icon name="" size="56px" />
+        <!-- section for challenge name  -->
+        <div class="challenge-name">How to parse Markdown</div>
+
+        <!-- section for challenge image  -->
+        <div>
+          <img
+            class="img"
+            src="/src/assets/markdown.png"
+            width="300"
+            height="180"
+          />
         </div>
+
+        <!-- section for challenge details  -->
+        <div class="challenge-info">
+          <p>
+            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
+          </p>
+          <p>Time Limit: 4 hrs</p>
+          <p>
+            Description: Insert challenge <br />
+            description here
+          </p>
+        </div>
+        <!-- <div class="q-mt-md text-center">
+          {{ lorem }}
+        </div> -->
       </q-carousel-slide>
       <q-carousel-slide name="map" class="column no-wrap flex-center">
-        <q-icon name="terrain" size="56px" />
-        <div class="q-mt-md text-center">
-          {{ lorem }}
+        <q-icon name="" size="56px" />
+        <!-- section for challenge name  -->
+        <div class="challenge-name">How to parse Markdown</div>
+
+        <!-- section for challenge image  -->
+        <div>
+          <img
+            class="img"
+            src="/src/assets/markdown.png"
+            width="300"
+            height="180"
+          />
         </div>
+
+        <!-- section for challenge details  -->
+        <div class="challenge-info">
+          <p>
+            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
+          </p>
+          <p>Time Limit: 4 hrs</p>
+          <p>
+            Description: Insert challenge <br />
+            description here
+          </p>
+        </div>
+        <!-- <div class="q-mt-md text-center">
+          {{ lorem }}
+        </div> -->
       </q-carousel-slide>
     </q-carousel>
 
@@ -86,9 +179,9 @@ useChallenge.setChallengeName("Parsing Markdown");
 
 <style lang="sass">
 .card
-  width: 500px
-  height: 300px
-  margin-left: 70px
+  width: 564px
+  height: 350px
+  margin-left: 60px
   background-color: $secondary
   color: white
   border-radius: 23px
@@ -97,7 +190,20 @@ useChallenge.setChallengeName("Parsing Markdown");
 .challenge-name
   font-weight: bold
   font-size: 22px
-  display: flex
-</style>
+  position: relative
+  bottom: 50px
+  right: 108px
+  font-family: Verdana, sans-serif
 
-// vertical-align: top // text-align: left
+.img
+  position: relative
+  bottom: 20px
+  right: 80px
+  border-radius: 3%
+
+.challenge-info
+  position: absolute
+  bottom: 145px
+  left: 364px
+  font-size: 12px
+</style>
