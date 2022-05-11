@@ -4,6 +4,7 @@ import Modal from "../components/Modal.vue";
 import { useAuthStore } from "../stores/auth";
 
 const useAuth = useAuthStore();
+import Card from "../components/Card.vue";
 
 const drawer = ref(false);
 const miniState = ref(true);
@@ -118,6 +119,9 @@ const bio = ref("Default bio\n CyberSecurity Team");
       <Modal :loginModal="useAuth.getShowLogin" />
 
       <q-page-container>
+        <q-page padding>
+          <Card />
+        </q-page>
         <router-view />
       </q-page-container>
     </q-layout>
