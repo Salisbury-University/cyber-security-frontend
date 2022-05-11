@@ -7,20 +7,32 @@ const useAuth = useAuthStore();
 <template>
   <q-page>
     <div>
-      <q-btn color="positive" @click="useAuth.setLoggedIn(false)"
+      <q-btn
+        color="positive"
+        @click="
+          () => {
+            useAuth.persistence.token = '';
+            useAuth.setAuthorizationHeader();
+            useAuth.setLoggedIn(false);
+          }
+        "
         >log-out</q-btn
       >
     </div>
-    current token:
-    <h3>{{ useAuth.persistence.token }}</h3>
+    <p style="color: white">current token:</p>
+    <h3 style="color: white">{{ useAuth.persistence.token }}</h3>
     <br />
     <q-btn
       color="negative"
-      @click="useAuth.persistence.loggedIn = !useAuth.persistence.loggedIn"
+      @click="
+        () => {
+          useAuth.persistence.loggedIn = !useAuth.persistence.loggedIn;
+        }
+      "
       >Change logged in state</q-btn
     >
     <br />
-    Current logged in state:
-    <h3>{{ useAuth.persistence.loggedIn }}</h3>
+    <p style="color: white">Current logged in state:</p>
+    <h3 style="color: white">{{ useAuth.persistence.loggedIn }}</h3>
   </q-page>
 </template>

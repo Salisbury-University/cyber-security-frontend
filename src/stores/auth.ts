@@ -91,6 +91,8 @@ export const useAuthStore = defineStore("auth", {
           this.setLoginAnimation(false);
           this.setLoggedIn(true);
 
+          this.persistence.token = res.data.token;
+          this.setAuthorizationHeader();
           console.log(this.getLoginAnimation);
           docFailed!.style.opacity = "0";
           console.log(res.data);
@@ -103,7 +105,6 @@ export const useAuthStore = defineStore("auth", {
             doc!.removeAttribute("disabled");
             this.setLoginAnimation(false);
           }, 2000);
-
           docFailed!.style.opacity = "1";
         });
 
