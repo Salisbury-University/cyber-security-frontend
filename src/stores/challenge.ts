@@ -158,18 +158,21 @@ export const useChallengeStore = defineStore("challenge", {
             i++
           ) {
             http()
-              .get("/api/v1/exercises/".concat(info[i]))
+              .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
                 const metadata = response.data.metadata;
 
+                console.log(metadata);
+
                 // push individual exercise info to name arr, timeLmit arr, etc.
-                this.persistence.name.push(metadata.name);
+                this.persistence.name.push(metadata.title);
                 this.persistence.timeLimit.push(metadata.timeLimit);
                 this.persistence.description.push(metadata.description);
                 this.persistence.image.push(metadata.image);
                 this.persistence.difficulty.push(metadata.difficulty);
               });
           }
+          console.log(this.persistence.name);
         });
     },
   },

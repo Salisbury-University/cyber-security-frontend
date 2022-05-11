@@ -5,38 +5,11 @@ import { useChallengeStore } from "../stores/challenge";
 const slide = ref("style");
 const useChallenge = useChallengeStore();
 
-const cardProp = defineProps({
-  // name of challenge
-  challengeName: {
-    type: String,
-  },
-
-  // time limit
-  timeLimit: {
-    type: Number,
-  },
-
-  // difficulty rating
-  difficulty: {
-    type: Number,
-  },
-
-  // short description of challenge
-  description: {
-    type: String,
-  },
-
-  // challenge image
-  img: {
-    type: Image,
-  },
-});
-
-//useChallenge.setChallenge();
+useChallenge.setChallenge();
 </script>
 
 <template>
-  <div class="q-pa-md row items-start q-gutter-md">
+  <div class="">
     <q-carousel
       v-model="slide"
       transition-prev="scale"
@@ -50,10 +23,10 @@ const cardProp = defineProps({
       bordered
       class="card"
     >
-      <q-carousel-slide name="style">
+      <q-carousel-slide name="card1">
         <q-icon name="" size="56px" />
         <!-- section for challenge name  -->
-        <div class="challenge-name">How to parse Markdown</div>
+        <div class="challenge-name">{{ useChallenge.persistence.name[0] }}</div>
 
         <!-- section for challenge image  -->
         <div>
@@ -68,19 +41,30 @@ const cardProp = defineProps({
         <!-- section for challenge details  -->
         <div class="challenge-info">
           <p>
-            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
+            Difficulty:
+            <span style="color: #ffff00">
+              {{ useChallenge.persistence.difficulty[0] }}
+            </span>
           </p>
-          <p>Time Limit: 4 hrs</p>
           <p>
-            Description: Insert challenge <br />
-            description here
+            Time Limit:
+            <span style="font-weight: normal">
+              {{ useChallenge.persistence.timeLimit[0] }}
+            </span>
+          </p>
+          <p>
+            Description:
+            <span style="font-weight: normal">
+              {{ useChallenge.persistence.description[0] }}
+            </span>
           </p>
         </div>
       </q-carousel-slide>
-      <q-carousel-slide name="tv" class="column no-wrap flex-center">
+
+      <q-carousel-slide name="card2">
         <q-icon name="" size="56px" />
         <!-- section for challenge name  -->
-        <div class="challenge-name">How to parse Markdown</div>
+        <div class="challenge-name">{{ useChallenge.persistence.name[1] }}</div>
 
         <!-- section for challenge image  -->
         <div>
@@ -95,81 +79,26 @@ const cardProp = defineProps({
         <!-- section for challenge details  -->
         <div class="challenge-info">
           <p>
-            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
+            Difficulty:
+            <span style="color: #ffff00">
+              {{ useChallenge.persistence.difficulty[1] }}
+            </span>
           </p>
-          <p>Time Limit: 4 hrs</p>
           <p>
-            Description: Insert challenge <br />
-            description here
+            Time Limit:
+            <span style="font-weight: normal"
+              >{{ useChallenge.persistence.timeLimit[1] }}
+            </span>
+          </p>
+          <p>
+            Description:
+            <span style="font-weight: normal">{{
+              useChallenge.persistence.description[1]
+            }}</span>
           </p>
         </div>
-        <!-- <div class="q-mt-md text-center">
-          {{ lorem }}
-        </div> -->
-      </q-carousel-slide>
-      <q-carousel-slide name="layers" class="column no-wrap flex-center">
-        <q-icon name="" size="56px" />
-        <!-- section for challenge name  -->
-        <div class="challenge-name">How to parse Markdown</div>
-
-        <!-- section for challenge image  -->
-        <div>
-          <img
-            class="img"
-            src="/src/assets/markdown.png"
-            width="300"
-            height="180"
-          />
-        </div>
-
-        <!-- section for challenge details  -->
-        <div class="challenge-info">
-          <p>
-            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
-          </p>
-          <p>Time Limit: 4 hrs</p>
-          <p>
-            Description: Insert challenge <br />
-            description here
-          </p>
-        </div>
-        <!-- <div class="q-mt-md text-center">
-          {{ lorem }}
-        </div> -->
-      </q-carousel-slide>
-      <q-carousel-slide name="map" class="column no-wrap flex-center">
-        <q-icon name="" size="56px" />
-        <!-- section for challenge name  -->
-        <div class="challenge-name">How to parse Markdown</div>
-
-        <!-- section for challenge image  -->
-        <div>
-          <img
-            class="img"
-            src="/src/assets/markdown.png"
-            width="300"
-            height="180"
-          />
-        </div>
-
-        <!-- section for challenge details  -->
-        <div class="challenge-info">
-          <p>
-            Difficulty: <span style="color: #4c9a2a; font-weight: bold">2</span>
-          </p>
-          <p>Time Limit: 4 hrs</p>
-          <p>
-            Description: Insert challenge <br />
-            description here
-          </p>
-        </div>
-        <!-- <div class="q-mt-md text-center">
-          {{ lorem }}
-        </div> -->
       </q-carousel-slide>
     </q-carousel>
-
-    <q-card bordered class="card"> </q-card>
   </div>
 </template>
 
@@ -201,5 +130,6 @@ const cardProp = defineProps({
   position: absolute
   bottom: 145px
   left: 364px
-  font-size: 12px
+  font-size: 11px
+  font-weight: bold
 </style>
