@@ -6,11 +6,11 @@ export const useChallengeStore = defineStore("challenge", {
   state: () => {
     return {
       persistence: useStorage("challenge", {
-        name: "",
-        timeLimit: "",
-        difficulty: "",
-        description: "",
-        image: "",
+        name: [],
+        timeLimit: [],
+        difficulty: [],
+        description: [],
+        image: [],
         token: "",
         header: {
           Authorization: "",
@@ -149,7 +149,27 @@ export const useChallengeStore = defineStore("challenge", {
           },
         })
         .then((res) => {
-          console.log(res);
+          const info = res.data.exercises;
+
+          // array of axios calls to get individual exercise
+          for (
+            let i = this.persistence.name.length;
+            i < res.data.exercises.length;
+            i++
+          ) {
+            http()
+              .get("/api/v1/exercises/".concat(info[i]))
+              .then((response) => {
+                const metadata = response.data.metadata;
+
+                // push individual exercise info to name arr, timeLmit arr, etc.
+                this.persistence.name.push(metadata.name);
+                this.persistence.timeLimit.push(metadata.timeLimit);
+                this.persistence.description.push(metadata.description);
+                this.persistence.image.push(metadata.image);
+                this.persistence.difficulty.push(metadata.difficulty);
+              });
+          }
         });
     },
   },

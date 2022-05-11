@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useChallengeStore } from "../stores/challenge";
 
 const slide = ref("style");
-const lorem = "Lorem ipsum Itaque voluptatem totam, libero ab nemo.";
 const useChallenge = useChallengeStore();
 
 const cardProp = defineProps({
@@ -34,9 +33,6 @@ const cardProp = defineProps({
 });
 
 //useChallenge.setChallenge();
-
-// example to check that challenge store works
-//useChallenge.setChallengeName("Parsing Markdown");
 </script>
 
 <template>
