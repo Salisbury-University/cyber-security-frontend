@@ -86,15 +86,15 @@ useChallenge.setChallenge();
           </p>
           <p>
             Time Limit:
-            <span style="font-weight: normal"
-              >{{ useChallenge.persistence.timeLimit[1] }}
+            <span style="font-weight: normal">
+              {{ useChallenge.persistence.timeLimit[1] }}
             </span>
           </p>
           <p>
             Description:
-            <span style="font-weight: normal">{{
-              useChallenge.persistence.description[1]
-            }}</span>
+            <span style="font-weight: normal">
+              {{ useChallenge.persistence.description[1] }}
+            </span>
           </p>
         </div>
       </q-carousel-slide>

@@ -162,8 +162,6 @@ export const useChallengeStore = defineStore("challenge", {
               .then((response) => {
                 const metadata = response.data.metadata;
 
-                console.log(metadata);
-
                 // push individual exercise info to name arr, timeLmit arr, etc.
                 this.persistence.name.push(metadata.title);
                 this.persistence.timeLimit.push(metadata.timeLimit);
