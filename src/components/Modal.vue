@@ -58,26 +58,29 @@ const props = defineProps({
   </div>
 </template>
 
-<style lang="sass">
-@import 'src/quasar-variables.sass'
+<style>
+.login-bg {
+  background-color: #2e9cca;
+}
 
-.login-bg
-  background-color: $primary
+.login-txt {
+  color: #fefefe;
+  text-align: center;
+  font-size: 45px;
+}
 
-.login-txt
-  color: $accent
-  text-align: center
-  font-size: 45px
+.btn-bg {
+  background-color: #aaabb8;
+  padding: 25px 30px 50px 30px;
+}
 
-.btn-bg
-  background-color: $info
-  padding: 25px 30px 50px 30px
+.input {
+  margin: 2px 25px 50px 25px;
+  background-color: #fefefe;
+  border-radius: 28px;
+}
 
-.input
-  margin: 2px 25px 50px 25px
-  background-color: $accent
-  border-radius: 28px
-
-.bg-focusedInput
-  background: $dark !important
+.bg-focusedInput {
+  background-color: #25274d;
+}
 </style>

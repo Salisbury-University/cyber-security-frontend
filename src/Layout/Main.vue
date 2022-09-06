@@ -24,6 +24,7 @@ function toggleLogin() {
         :mini="miniState"
         @mouseover="miniState = false"
         @mouseout="miniState = true"
+        mini-to-overlay
         :width="200"
         :breakpoint="400"
         class="menu-bg"
@@ -79,18 +80,20 @@ function toggleLogin() {
   </div>
 </template>
 
-<style lang="sass">
-@import 'src/quasar-variables.sass'
+<style>
+.menu-bg {
+  background-color: #2e9cca;
+}
 
-.menu-bg
-  background-color: $primary
+.menu-text {
+  color: #fefefe;
+}
 
-.menu-text
-  color: $accent
+.menu-icon {
+  color: #fefefe;
+}
 
-.menu-icon
-  color: $accent
-
-.q-item:hover
-  background-color: $dark
+.q-item:hover {
+  background-color: #25274d;
+}
 </style>

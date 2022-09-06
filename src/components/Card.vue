@@ -102,34 +102,38 @@ useChallenge.setChallenge();
   </div>
 </template>
 
-<style lang="sass">
-.card
-  width: 564px
-  height: 350px
-  margin-left: 60px
-  background-color: $secondary
-  color: white
-  border-radius: 23px
-  box-shadow: 0px 1px 2px black
+<style>
+.card {
+  width: 564px;
+  height: 350px;
+  margin-left: 60px;
+  background-color: #464866;
+  color: white;
+  border-radius: 23px;
+  box-shadow: 0px 1px 2px black;
+}
 
-.challenge-name
-  font-weight: bold
-  font-size: 22px
-  position: relative
-  bottom: 50px
-  right: 108px
-  font-family: Verdana, sans-serif
+.challenge-name {
+  font-weight: bold;
+  font-size: 22px;
+  position: relative;
+  bottom: 50px;
+  right: 108px;
+  font-family: Verdana, sans-serif;
+}
 
-.img
-  position: relative
-  bottom: 20px
-  right: 80px
-  border-radius: 3%
+.img {
+  position: relative;
+  bottom: 20px;
+  right: 80px;
+  border-radius: 3%;
+}
 
-.challenge-info
-  position: absolute
-  bottom: 145px
-  left: 364px
-  font-size: 11px
-  font-weight: bold
+.challenge-info {
+  position: absolute;
+  bottom: 145px;
+  left: 364px;
+  font-size: 11px;
+  font-weight: bold;
+}
 </style>
