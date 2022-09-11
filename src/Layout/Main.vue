@@ -30,7 +30,13 @@ function toggleLogin() {
         class="menu-bg"
       >
         <q-list padding>
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item
+            class="q-item"
+            active
+            clickable
+            v-ripple
+            @click="$router.replace('/')"
+          >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="home" />
             </q-item-section>
@@ -38,7 +44,13 @@ function toggleLogin() {
             <q-item-section class="menu-text"> Home </q-item-section>
           </q-item>
 
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item
+            class="q-item"
+            active
+            clickable
+            v-ripple
+            @click="$router.replace('/challenges')"
+          >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="rocket_launch"></q-icon>
             </q-item-section>
@@ -69,13 +81,7 @@ function toggleLogin() {
       </q-drawer>
 
       <Modal :loginModal="showLogin" @event="toggleLogin()" />
-
-      <q-page-container>
-        <q-page padding>
-          <Card />
-        </q-page>
-        <router-view />
-      </q-page-container>
+      <router-view />
     </q-layout>
   </div>
 </template>
