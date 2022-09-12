@@ -135,7 +135,7 @@ export const useChallengeStore = defineStore("challenge", {
     },
 
     /**
-     * Grabs info for preview of challenge
+     * Grabs info for challenge
      */
     setChallenge(): void {
       this.setToken();

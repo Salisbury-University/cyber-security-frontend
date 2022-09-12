@@ -10,13 +10,12 @@ const routes: Array<RouteRecordRaw> = [
     component: MainLayout,
     children: [
       {
-        // This is the landing page
+        // Landing page
         path: "",
         component: Index,
       },
       {
-        //Example of path
-        // This will be route to /challenges
+        // Challenges page
         path: "/challenges",
         component: Challenges,
       },
