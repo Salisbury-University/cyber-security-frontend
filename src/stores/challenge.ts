@@ -5,12 +5,12 @@ import http from "../http";
 export const useChallengeStore = defineStore("challenge", {
   state: () => {
     return {
+      name: [],
+      timeLimit: [],
+      difficulty: [],
+      description: [],
+      image: [],
       persistence: useStorage("challenge", {
-        name: [],
-        timeLimit: [],
-        difficulty: [],
-        description: [],
-        image: [],
         token: "",
         header: {
           Authorization: "",
@@ -27,7 +27,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @return {string} name state
      */
     getChallengeName(state: any): string {
-      return state.persistence.name;
+      return state.name;
     },
 
     /**
@@ -37,7 +37,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {string} timeLimit state
      */
     getTimeLimit(state: any): string {
-      return state.persistence.timeLimit;
+      return state.timeLimit;
     },
 
     /**
@@ -47,7 +47,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {number} difficulty state
      */
     getDifficulty(state: any): number {
-      return state.persistence.difficulty;
+      return state.difficulty;
     },
 
     /**
@@ -57,7 +57,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {string} description state
      */
     getDescription(state: any): string {
-      return state.persistence.description;
+      return state.description;
     },
 
     /**
@@ -67,7 +67,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {string} image state
      */
     getImage(state: any): string {
-      return state.persistence.image;
+      return state.image;
     },
   },
 
@@ -78,7 +78,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} name name of challenge
      */
     setChallengeName(name: string): void {
-      this.persistence.name = name;
+      this.name = name;
     },
 
     /**
@@ -87,7 +87,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} limit time limit for challenge
      */
     setTimeLimit(limit: string): void {
-      this.persistence.timeLimit = limit;
+      this.timeLimit = limit;
     },
 
     /**
@@ -96,7 +96,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {number} level difficulty for challenge
      */
     setDifficulty(level: number): void {
-      this.persistence.difficulty = level;
+      this.difficulty = level;
     },
 
     /**
@@ -105,7 +105,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} descr description of challenge
      */
     setDescription(descr: string): void {
-      this.persistence.description = descr;
+      this.description = descr;
     },
 
     /**
@@ -114,7 +114,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} imgUrl url to challenge image
      */
     setImage(imgUrl: string): void {
-      this.persistence.image = imgUrl;
+      this.image = imgUrl;
     },
 
     /**
@@ -132,6 +132,14 @@ export const useChallengeStore = defineStore("challenge", {
     setToken(): void {
       this.persistence.token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
+    },
+
+    resetState(): void {
+      this.name = [];
+      this.timeLimit = [];
+      this.difficulty = [];
+      this.description = [];
+      this.image = [];
     },
 
     /**
@@ -152,25 +160,19 @@ export const useChallengeStore = defineStore("challenge", {
           const info = res.data.exercises;
 
           // array of axios calls to get individual exercise
-          for (
-            let i = this.persistence.name.length;
-            i < res.data.exercises.length;
-            i++
-          ) {
+          for (let i = 0; i < info.length; i++) {
             http()
               .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
                 const metadata = response.data.metadata;
-
                 // push individual exercise info to name arr, timeLmit arr, etc.
-                this.persistence.name.push(metadata.title);
-                this.persistence.timeLimit.push(metadata.timeLimit);
-                this.persistence.description.push(metadata.description);
-                this.persistence.image.push(metadata.image);
-                this.persistence.difficulty.push(metadata.difficulty);
+                this.name.push(metadata.title);
+                this.timeLimit.push(metadata.timeLimit);
+                this.description.push(metadata.description);
+                this.image.push(metadata.image);
+                this.difficulty.push(metadata.difficulty);
               });
           }
-          console.log(this.persistence.name);
         });
     },
   },
