@@ -64,13 +64,13 @@ console.log(exerciseLength);
         <h1>{{ index }}</h1>
 
         <!-- Put image of challenge category here -->
-        <q-img width="150px" src="" />
+        <q-img width="150px" src="{{ useChallenge.image[index] }}" />
 
         <span style="margin-left: 50px">
-          <h2 id="challengeName">{{ useChallenge.name[index] }}</h2>
-          <h3 id="difficulty">
+          <p id="challengeName">{{ useChallenge.name[index] }}</p>
+          <p id="difficulty">
             Difficulty: {{ useChallenge.difficulty[index] }}
-          </h3>
+          </p>
           <p id="description">{{ useChallenge.description[index] }}</p>
         </span>
 
@@ -112,10 +112,17 @@ console.log(exerciseLength);
 
 #challengeName {
   color: #2e9cca;
+  font-size: 30px;
+  margin-bottom: 40px;
+  margin-top: 50px;
+  font-weight: bold;
 }
 
 #difficulty {
   text-align: left;
-  margin-top: -40px;
+  font-size: 18px;
+  margin-bottom: 55px;
+  margin-top: -30px;
+  color: #464866;
 }
 </style>
