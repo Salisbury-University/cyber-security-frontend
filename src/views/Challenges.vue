@@ -2,7 +2,6 @@
 import { useChallengeStore } from "../stores/challenge";
 
 const useChallenge = useChallengeStore();
-//useChallenge.resetState();
 useChallenge.setChallenge();
 
 // arr for storing challenge info
@@ -27,8 +26,6 @@ const exerciseLength = useChallenge.name.length;
 //   });
 //   i++;
 // }
-
-console.log(exerciseLength);
 </script>
 
 <template>
@@ -64,14 +61,14 @@ console.log(exerciseLength);
         <h1>{{ index }}</h1>
 
         <!-- Put image of challenge category here -->
-        <q-img width="150px" src="{{ useChallenge.image[index] }}" />
+        <q-img width="150px" src="{{ useChallenge.image[index-1] }}" />
 
         <span style="margin-left: 50px">
-          <p id="challengeName">{{ useChallenge.name[index] }}</p>
+          <p id="challengeName">{{ useChallenge.name[index - 1] }}</p>
           <p id="difficulty">
-            Difficulty: {{ useChallenge.difficulty[index] }}
+            Difficulty: {{ useChallenge.difficulty[index - 1] }}
           </p>
-          <p id="description">{{ useChallenge.description[index] }}</p>
+          <p id="description">{{ useChallenge.description[index - 1] }}</p>
         </span>
 
         <!-- Start or Continue btn based on completion here -->

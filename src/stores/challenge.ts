@@ -134,14 +134,6 @@ export const useChallengeStore = defineStore("challenge", {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
     },
 
-    resetState(): void {
-      this.name = [];
-      this.timeLimit = [];
-      this.difficulty = [];
-      this.description = [];
-      this.image = [];
-    },
-
     /**
      * Grabs info for challenge
      */
@@ -165,12 +157,12 @@ export const useChallengeStore = defineStore("challenge", {
               .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
                 const metadata = response.data.metadata;
-                // push individual exercise info to name arr, timeLmit arr, etc.
-                this.name.push(metadata.title);
-                this.timeLimit.push(metadata.timeLimit);
-                this.description.push(metadata.description);
-                this.image.push(metadata.image);
-                this.difficulty.push(metadata.difficulty);
+                // store individual exercise info in name arr, timeLmit arr, etc.
+                this.name[i] = metadata.title;
+                this.timeLimit[i] = metadata.timeLimit;
+                this.description[i] = metadata.description;
+                this.image[i] = metadata.image;
+                this.difficulty[i] = metadata.difficulty;
               });
           }
         });
