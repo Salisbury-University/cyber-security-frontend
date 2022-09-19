@@ -4,28 +4,7 @@ import { useChallengeStore } from "../stores/challenge";
 const useChallenge = useChallengeStore();
 useChallenge.setChallenge();
 
-// arr for storing challenge info
-// const challengeItems: {
-//   challengeName: string;
-//   timeLimit: number;
-//   difficulty: number;
-//   description: string;
-//   image: string;
-// }[] = [];
-
-const exerciseLength = useChallenge.name.length;
-
-// loop through and store challenges in challengeItems arr
-// while (i < exerciseLength) {
-//   useChallenge.push({
-//     challengeName: useChallenge.persistence.name[i],
-//     timeLimit: useChallenge.persistence.timeLimit[i],
-//     difficulty: useChallenge.persistence.difficulty[i],
-//     description: useChallenge.persistence.description[i],
-//     image: useChallenge.persistence.image[i],
-//   });
-//   i++;
-// }
+const challengeListSize = useChallenge.name.length;
 </script>
 
 <template>
@@ -56,13 +35,14 @@ const exerciseLength = useChallenge.name.length;
 
   <!-- Challenge list -->
   <ul>
-    <li v-for="index in exerciseLength" :key="index">
+    <li v-for="index in challengeListSize" :key="index">
       <div class="container">
         <h1>{{ index }}</h1>
 
-        <!-- Put image of challenge category here -->
+        <!-- Challenge image -->
         <q-img width="150px" src="{{ useChallenge.image[index-1] }}" />
 
+        <!-- Challenge description and difficulty -->
         <span style="margin-left: 50px">
           <p id="challengeName">{{ useChallenge.name[index - 1] }}</p>
           <p id="difficulty">
