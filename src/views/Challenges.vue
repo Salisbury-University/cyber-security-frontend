@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
+import searchBar from "../components/searchBar.vue";
 
 const useChallenge = useChallengeStore();
 useChallenge.setChallenge();
@@ -32,6 +33,9 @@ const challengeListSize = useChallenge.name.length;
   </q-btn>
 
   <q-btn class="filter" label="Completed"></q-btn>
+
+  <!-- Search bar -->
+  <searchBar />
 
   <!-- Challenge list -->
   <ul>
