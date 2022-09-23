@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
-import searchBar from "../components/searchBar.vue";
+import SearchBar from "../components/SearchBar.vue";
 import { ref } from "vue";
 
 const useChallenge = useChallengeStore();
@@ -42,7 +42,7 @@ function performSearch(input: String) {
   <q-btn class="filter" label="Completed"></q-btn>
 
   <!-- Search bar -->
-  <searchBar @doSearch="performSearch($event)" />
+  <SearchBar @doSearch="performSearch($event)" />
 
   <!-- Filtered Challenge list after search-->
   <ul v-if="isFiltered">
