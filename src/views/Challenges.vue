@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
 import searchBar from "../components/searchBar.vue";
+import { ref } from "vue";
 
 const useChallenge = useChallengeStore();
 useChallenge.setChallenge();
 
 const challengeListSize = useChallenge.name.length;
+const isFiltered = ref(false);
+
+// function to search challenge list
+function performSearch(input: String) {
+  isFiltered.value = !isFiltered.value;
+}
 </script>
 
 <template>
@@ -35,10 +42,15 @@ const challengeListSize = useChallenge.name.length;
   <q-btn class="filter" label="Completed"></q-btn>
 
   <!-- Search bar -->
-  <searchBar />
+  <searchBar @doSearch="performSearch($event)" />
 
-  <!-- Challenge list -->
-  <ul>
+  <!-- Filtered Challenge list after search-->
+  <ul v-if="isFiltered">
+    <li></li>
+  </ul>
+
+  <!-- Default challenge list -->
+  <ul v-else>
     <li v-for="index in challengeListSize" :key="index">
       <div class="container">
         <h1>{{ index }}</h1>
