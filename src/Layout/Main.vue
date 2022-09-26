@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Modal from "../components/Modal.vue";
+import Card from "../components/Card.vue";
 
 const drawer = ref(false);
 const miniState = ref(true);
@@ -29,7 +30,13 @@ function toggleLogin() {
         class="menu-bg"
       >
         <q-list padding>
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item
+            class="q-item"
+            active
+            clickable
+            v-ripple
+            @click="$router.replace('/')"
+          >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="home" />
             </q-item-section>
@@ -37,7 +44,13 @@ function toggleLogin() {
             <q-item-section class="menu-text"> Home </q-item-section>
           </q-item>
 
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item
+            class="q-item"
+            active
+            clickable
+            v-ripple
+            @click="$router.replace('/challenges')"
+          >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="rocket_launch"></q-icon>
             </q-item-section>
@@ -68,26 +81,25 @@ function toggleLogin() {
       </q-drawer>
 
       <Modal :loginModal="showLogin" @event="toggleLogin()" />
-
-      <q-page-container>
-        <router-view />
-      </q-page-container>
+      <router-view />
     </q-layout>
   </div>
 </template>
 
-<style lang="sass">
-@import 'src/quasar-variables.sass'
+<style>
+.menu-bg {
+  background-color: #2e9cca;
+}
 
-.menu-bg
-  background-color: $primary
+.menu-text {
+  color: #fefefe;
+}
 
-.menu-text
-  color: $accent
+.menu-icon {
+  color: #fefefe;
+}
 
-.menu-icon
-  color: $accent
-
-.q-item:hover
-  background-color: $dark
+.q-item:hover {
+  background-color: #25274d;
+}
 </style>

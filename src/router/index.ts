@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 import MainLayout from "../Layout/Main.vue";
 import Index from "../views/Index.vue";
+import Challenges from "../views/Challenges.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,15 +10,14 @@ const routes: Array<RouteRecordRaw> = [
     component: MainLayout,
     children: [
       {
-        // This is the landing page
+        // Landing page
         path: "",
         component: Index,
       },
       {
-        //Example of path
-        // This will be route to /challenges
-        path: "challenges",
-        component: Index,
+        // Challenges page
+        path: "/challenges",
+        component: Challenges,
       },
     ],
   },
