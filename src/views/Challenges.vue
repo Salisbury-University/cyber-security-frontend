@@ -9,9 +9,19 @@ useChallenge.setChallenge();
 const challengeListSize = useChallenge.name.length;
 const isFiltered = ref(false);
 
-// function to search challenge list
-function performSearch(input: String) {
-  isFiltered.value = !isFiltered.value;
+let searchText = ref("");
+
+// const results: {
+//   Name: string,
+//   Image: string,
+//   Difficulty: number,
+//   Description: string
+// }[] = [];
+
+// function signal that challenge list has been filtered
+function filterChallengeList(input: string) {
+  isFiltered.value = true;
+  searchText.value = input;
 }
 </script>
 
@@ -42,11 +52,32 @@ function performSearch(input: String) {
   <q-btn class="filter" label="Completed"></q-btn>
 
   <!-- Search bar -->
-  <SearchBar @doSearch="performSearch($event)" />
+  <SearchBar @applyFilter="filterChallengeList($event)" />
 
   <!-- Filtered Challenge list after search-->
   <ul v-if="isFiltered">
-    <li></li>
+    <li v-for="i in challengeListSize" :key="i">
+      <div
+        v-if="
+          useChallenge.name[i - 1]
+            .toLowerCase()
+            .includes(searchText.toLowerCase())
+        "
+        class="container"
+      >
+        <h1>{{ i }}</h1>
+
+        <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
+
+        <span style="margin-left: 50px">
+          <p class="challengeName">{{ useChallenge.name[i - 1] }}</p>
+          <p class="difficulty">
+            Difficulty: {{ useChallenge.difficulty[i - 1] }}
+          </p>
+          <p class="description">{{ useChallenge.description[i - 1] }}</p>
+        </span>
+      </div>
+    </li>
   </ul>
 
   <!-- Default challenge list -->
@@ -56,15 +87,15 @@ function performSearch(input: String) {
         <h1>{{ index }}</h1>
 
         <!-- Challenge image -->
-        <q-img width="150px" src="{{ useChallenge.image[index-1] }}" />
+        <q-img width="150px" src="{{ useChallenge.image[index - 1] }}" />
 
         <!-- Challenge description and difficulty -->
         <span style="margin-left: 50px">
-          <p id="challengeName">{{ useChallenge.name[index - 1] }}</p>
-          <p id="difficulty">
+          <p class="challengeName">{{ useChallenge.name[index - 1] }}</p>
+          <p class="difficulty">
             Difficulty: {{ useChallenge.difficulty[index - 1] }}
           </p>
-          <p id="description">{{ useChallenge.description[index - 1] }}</p>
+          <p class="description">{{ useChallenge.description[index - 1] }}</p>
         </span>
 
         <!-- Start or Continue btn based on completion here -->
@@ -90,7 +121,7 @@ function performSearch(input: String) {
   color: #aaabb8;
 }
 
-#description {
+.description {
   color: #aaabb8;
   margin-top: -40px;
   font-size: 18px;
@@ -103,7 +134,7 @@ function performSearch(input: String) {
   margin-top: 50px;
 }
 
-#challengeName {
+.challengeName {
   color: #2e9cca;
   font-size: 30px;
   margin-bottom: 40px;
@@ -111,7 +142,7 @@ function performSearch(input: String) {
   font-weight: bold;
 }
 
-#difficulty {
+.difficulty {
   text-align: left;
   font-size: 18px;
   margin-bottom: 55px;

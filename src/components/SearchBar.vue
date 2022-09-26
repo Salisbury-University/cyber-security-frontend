@@ -6,7 +6,7 @@ const text = ref("");
 
 <template>
   <div class="searchBarArea">
-    <q-form @submit="$emit('doSearch', text)">
+    <q-form @submit="$emit('applyFilter', text)">
       <q-input
         bg-color="grey-5"
         class="searchBar"
