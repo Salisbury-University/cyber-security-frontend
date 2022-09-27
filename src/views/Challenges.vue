@@ -76,6 +76,8 @@ function filterChallengeList(input: string) {
           </p>
           <p class="description">{{ useChallenge.description[i - 1] }}</p>
         </span>
+
+        <!-- Checkbox for completion of challenges here -->
       </div>
     </li>
   </ul>
@@ -98,7 +100,7 @@ function filterChallengeList(input: string) {
           <p class="description">{{ useChallenge.description[index - 1] }}</p>
         </span>
 
-        <!-- Start or Continue btn based on completion here -->
+        <!-- Checkbox for completion of challenges here -->
       </div>
     </li>
   </ul>

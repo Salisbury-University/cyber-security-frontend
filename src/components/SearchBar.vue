@@ -15,6 +15,9 @@ const text = ref("");
         v-model="text"
         placeholder="Search Challenges"
       >
+        <q-btn round flat @click="$emit('applyFilter', text)">
+          <q-icon name="search" size="28px" />
+        </q-btn>
       </q-input>
     </q-form>
   </div>
