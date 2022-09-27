@@ -11,14 +11,7 @@ const isFiltered = ref(false);
 
 let searchText = ref("");
 
-// const results: {
-//   Name: string,
-//   Image: string,
-//   Difficulty: number,
-//   Description: string
-// }[] = [];
-
-// function signal that challenge list has been filtered
+// function to signal that challenge list has been filtered
 function filterChallengeList(input: string) {
   isFiltered.value = true;
   searchText.value = input;
@@ -56,7 +49,7 @@ function filterChallengeList(input: string) {
 
   <!-- Filtered Challenge list after search-->
   <ul v-if="isFiltered">
-    <li v-for="i in challengeListSize" :key="i">
+    <div v-for="i in challengeListSize" :key="i">
       <div
         v-if="
           useChallenge.name[i - 1]
@@ -79,7 +72,7 @@ function filterChallengeList(input: string) {
 
         <!-- Checkbox for completion of challenges here -->
       </div>
-    </li>
+    </div>
   </ul>
 
   <!-- Default challenge list -->
