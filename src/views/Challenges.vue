@@ -45,7 +45,7 @@ function filterChallengeList(input: string) {
   <q-btn class="filter" label="Completed"></q-btn>
 
   <!-- Search bar -->
-  <SearchBar @applyFilter="filterChallengeList($event)" />
+  <SearchBar @applyChallengeFilter="filterChallengeList($event)" />
 
   <!-- Filtered Challenge list after search-->
   <ul v-if="isFiltered">

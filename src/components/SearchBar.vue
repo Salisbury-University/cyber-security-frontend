@@ -6,7 +6,7 @@ const text = ref("");
 
 <template>
   <div class="searchBarArea">
-    <q-form @submit="$emit('applyFilter', text)">
+    <q-form @submit="$emit('applyChallengeFilter', text)">
       <q-input
         bg-color="grey-5"
         class="searchBar"
@@ -15,7 +15,7 @@ const text = ref("");
         v-model="text"
         placeholder="Search Challenges"
       >
-        <q-btn round flat @click="$emit('applyFilter', text)">
+        <q-btn round flat @click="$emit('applyChallengeFilter', text)">
           <q-icon name="search" size="28px" />
         </q-btn>
       </q-input>
