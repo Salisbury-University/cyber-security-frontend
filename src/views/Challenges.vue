@@ -1,10 +1,21 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
+import SearchBar from "../components/SearchBar.vue";
+import { ref } from "vue";
 
 const useChallenge = useChallengeStore();
 useChallenge.setChallenge();
 
 const challengeListSize = useChallenge.name.length;
+const isFiltered = ref(false);
+
+let searchText = ref("");
+
+// function to signal that challenge list has been filtered
+function filterChallengeList(input: string) {
+  isFiltered.value = true;
+  searchText.value = input;
+}
 </script>
 
 <template>
@@ -33,25 +44,56 @@ const challengeListSize = useChallenge.name.length;
 
   <q-btn class="filter" label="Completed"></q-btn>
 
-  <!-- Challenge list -->
-  <ul>
+  <!-- Search bar -->
+  <SearchBar @applyChallengeFilter="filterChallengeList($event)" />
+
+  <!-- Filtered Challenge list after search-->
+  <ul v-if="isFiltered">
+    <div v-for="i in challengeListSize" :key="i">
+      <div
+        v-if="
+          useChallenge.name[i - 1]
+            .toLowerCase()
+            .includes(searchText.toLowerCase())
+        "
+        class="container"
+      >
+        <h1>{{ i }}</h1>
+
+        <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
+
+        <span style="margin-left: 50px">
+          <p class="challengeName">{{ useChallenge.name[i - 1] }}</p>
+          <p class="difficulty">
+            Difficulty: {{ useChallenge.difficulty[i - 1] }}
+          </p>
+          <p class="description">{{ useChallenge.description[i - 1] }}</p>
+        </span>
+
+        <!-- Checkbox for completion of challenges here -->
+      </div>
+    </div>
+  </ul>
+
+  <!-- Default challenge list -->
+  <ul v-else>
     <li v-for="index in challengeListSize" :key="index">
       <div class="container">
         <h1>{{ index }}</h1>
 
         <!-- Challenge image -->
-        <q-img width="150px" src="{{ useChallenge.image[index-1] }}" />
+        <q-img width="150px" src="{{ useChallenge.image[index - 1] }}" />
 
         <!-- Challenge description and difficulty -->
         <span style="margin-left: 50px">
-          <p id="challengeName">{{ useChallenge.name[index - 1] }}</p>
-          <p id="difficulty">
+          <p class="challengeName">{{ useChallenge.name[index - 1] }}</p>
+          <p class="difficulty">
             Difficulty: {{ useChallenge.difficulty[index - 1] }}
           </p>
-          <p id="description">{{ useChallenge.description[index - 1] }}</p>
+          <p class="description">{{ useChallenge.description[index - 1] }}</p>
         </span>
 
-        <!-- Start or Continue btn based on completion here -->
+        <!-- Checkbox for completion of challenges here -->
       </div>
     </li>
   </ul>
@@ -74,7 +116,7 @@ const challengeListSize = useChallenge.name.length;
   color: #aaabb8;
 }
 
-#description {
+.description {
   color: #aaabb8;
   margin-top: -40px;
   font-size: 18px;
@@ -87,7 +129,7 @@ const challengeListSize = useChallenge.name.length;
   margin-top: 50px;
 }
 
-#challengeName {
+.challengeName {
   color: #2e9cca;
   font-size: 30px;
   margin-bottom: 40px;
@@ -95,7 +137,7 @@ const challengeListSize = useChallenge.name.length;
   font-weight: bold;
 }
 
-#difficulty {
+.difficulty {
   text-align: left;
   font-size: 18px;
   margin-bottom: 55px;
