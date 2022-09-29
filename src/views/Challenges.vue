@@ -22,25 +22,28 @@ function filterChallengeList(input: string) {
   <h1 id="title">Challenges</h1>
 
   <!-- Challenge filters -->
-  <q-btn class="filter" style="margin-right: 25px" label="Category">
-    <q-menu></q-menu>
-  </q-btn>
+  <q-btn-dropdown label="Category" class="filterOptMenu"> </q-btn-dropdown>
 
-  <q-btn class="filter" style="margin-right: 25px" label="Difficulty">
-    <q-menu>
-      <q-list>
-        <q-item clickable v-close-popup>
-          <q-item-section>Easy</q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup>
-          <q-item-section>Medium</q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup>
-          <q-item-section>Hard</q-item-section>
-        </q-item>
-      </q-list>
-    </q-menu>
-  </q-btn>
+  <q-btn-dropdown label="Difficulty" class="filterOptMenu">
+    <q-list>
+      <q-item
+        clickable
+        v-close-popup
+        class="text-green-5"
+        @click="isFiltered = !isFiltered"
+      >
+        <q-item-section>Easy</q-item-section>
+      </q-item>
+
+      <q-item clickable v-close-popup class="text-orange-7">
+        <q-item-section>Medium</q-item-section>
+      </q-item>
+
+      <q-item clickable v-close-popup class="text-red-7">
+        <q-item-section>Hard</q-item-section>
+      </q-item>
+    </q-list>
+  </q-btn-dropdown>
 
   <q-btn class="filter" label="Completed"></q-btn>
 
@@ -143,5 +146,11 @@ function filterChallengeList(input: string) {
   margin-bottom: 55px;
   margin-top: -30px;
   color: #464866;
+}
+
+.filterOptMenu {
+  background-color: #464866;
+  color: #aaabb8;
+  margin-right: 20px;
 }
 </style>
