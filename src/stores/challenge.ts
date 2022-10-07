@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
+import { useAuthStore } from "./auth";
 import http from "../http";
 
 export const useChallengeStore = defineStore("challenge", {
@@ -11,7 +12,6 @@ export const useChallengeStore = defineStore("challenge", {
       description: [],
       image: [],
       persistence: useStorage("challenge", {
-        token: "",
         header: {
           Authorization: "",
         },
@@ -118,34 +118,17 @@ export const useChallengeStore = defineStore("challenge", {
     },
 
     /**
-     * Sets the authorization header with token information
-     */
-    setAuthorizationHeader(): void {
-      this.persistence.header.Authorization = "Bearer ".concat(
-        this.persistence.token
-      );
-    },
-
-    /**
-     * Sets the token information
-     */
-    setToken(): void {
-      this.persistence.token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
-    },
-
-    /**
      * Grabs info for challenge
      */
     setChallenge(): void {
-      this.setToken();
-      this.setAuthorizationHeader();
+      useAuthStore().setToken();
+      useAuthStore().setAuthorizationHeader();
 
       // axios call
       http()
         .get("/api/v1/exercises", {
           headers: {
-            Authorization: this.persistence.header.Authorization,
+            Authorization: useAuthStore().persistence.header.Authorization,
           },
         })
         .then((res) => {
