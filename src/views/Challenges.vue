@@ -8,6 +8,9 @@ useChallenge.setChallenge();
 
 const challengeListSize = useChallenge.name.length;
 const isFiltered = ref(false);
+const easyFilter = ref(false);
+const mediumFilter = ref(false);
+const hardFilter = ref(false);
 
 let searchText = ref("");
 
@@ -15,6 +18,13 @@ let searchText = ref("");
 function filterChallengeList(input: string) {
   isFiltered.value = true;
   searchText.value = input;
+}
+
+// resets difficulty filters
+function resetFilters() {
+  easyFilter.value = false;
+  mediumFilter.value = false;
+  hardFilter.value = false;
 }
 </script>
 
@@ -30,16 +40,41 @@ function filterChallengeList(input: string) {
         clickable
         v-close-popup
         class="text-green-5"
-        @click="isFiltered = !isFiltered"
+        @click="
+          () => {
+            resetFilters();
+            easyFilter = !easyFilter;
+          }
+        "
       >
         <q-item-section>Easy</q-item-section>
       </q-item>
 
-      <q-item clickable v-close-popup class="text-orange-7">
+      <q-item
+        clickable
+        v-close-popup
+        class="text-orange-7"
+        @click="
+          () => {
+            resetFilters();
+            mediumFilter = !mediumFilter;
+          }
+        "
+      >
         <q-item-section>Medium</q-item-section>
       </q-item>
 
-      <q-item clickable v-close-popup class="text-red-7">
+      <q-item
+        clickable
+        v-close-popup
+        class="text-red-7"
+        @click="
+          () => {
+            resetFilters();
+            hardFilter = !hardFilter;
+          }
+        "
+      >
         <q-item-section>Hard</q-item-section>
       </q-item>
     </q-list>
@@ -50,14 +85,14 @@ function filterChallengeList(input: string) {
   <!-- Search bar -->
   <SearchBar @applyChallengeFilter="filterChallengeList($event)" />
 
-  <!-- Filtered Challenge list after search-->
+  <!-- Filtered Challenge list after search input-->
   <ul v-if="isFiltered">
     <div v-for="i in challengeListSize" :key="i">
       <div
         v-if="
           useChallenge.name[i - 1]
             .toLowerCase()
-            .includes(searchText.toLowerCase())
+            .includes(searchText.toLowerCase()) && searchText
         "
         class="container"
       >
@@ -71,6 +106,77 @@ function filterChallengeList(input: string) {
             Difficulty: {{ useChallenge.difficulty[i - 1] }}
           </p>
           <p class="description">{{ useChallenge.description[i - 1] }}</p>
+        </span>
+
+        <!-- Checkbox for completion of challenges here -->
+      </div>
+    </div>
+  </ul>
+
+  <div></div>
+
+  <!-- Show easy challenges -->
+  <ul v-if="easyFilter">
+    <div v-for="easyIndex in challengeListSize" :key="easyIndex">
+      <div v-if="useChallenge.difficulty[easyIndex - 1] < 4" class="container">
+        <h1>{{ easyIndex }}</h1>
+
+        <q-img width="150px" src="{{ useChallenge.image[easyIndex - 1] }}" />
+
+        <span style="margin-left: 50px">
+          <p class="challengeName">{{ useChallenge.name[easyIndex - 1] }}</p>
+          <p class="difficulty">
+            Difficulty: {{ useChallenge.difficulty[easyIndex - 1] }}
+          </p>
+          <p class="description">
+            {{ useChallenge.description[easyIndex - 1] }}
+          </p>
+        </span>
+
+        <!-- Checkbox for completion of challenges here -->
+      </div>
+    </div>
+  </ul>
+
+  <!-- Show medium challenges -->
+  <ul v-else-if="mediumFilter">
+    <div v-for="medIndex in challengeListSize" :key="medIndex">
+      <div v-if="useChallenge.difficulty[medIndex - 1] == 4" class="container">
+        <h1>{{ medIndex }}</h1>
+
+        <q-img width="150px" src="{{ useChallenge.image[medIndex - 1] }}" />
+
+        <span style="margin-left: 50px">
+          <p class="challengeName">{{ useChallenge.name[medIndex - 1] }}</p>
+          <p class="difficulty">
+            Difficulty: {{ useChallenge.difficulty[medIndex - 1] }}
+          </p>
+          <p class="description">
+            {{ useChallenge.description[medIndex - 1] }}
+          </p>
+        </span>
+
+        <!-- Checkbox for completion of challenges here -->
+      </div>
+    </div>
+  </ul>
+
+  <!-- Show hard challenges -->
+  <ul v-else-if="hardFilter">
+    <div v-for="hardIndex in challengeListSize" :key="hardIndex">
+      <div v-if="useChallenge.difficulty[hardIndex - 1] > 4" class="container">
+        <h1>{{ hardIndex }}</h1>
+
+        <q-img width="150px" src="{{ useChallenge.image[hardIndex - 1] }}" />
+
+        <span style="margin-left: 50px">
+          <p class="challengeName">{{ useChallenge.name[hardIndex - 1] }}</p>
+          <p class="difficulty">
+            Difficulty: {{ useChallenge.difficulty[hardIndex - 1] }}
+          </p>
+          <p class="description">
+            {{ useChallenge.description[hardIndex - 1] }}
+          </p>
         </span>
 
         <!-- Checkbox for completion of challenges here -->
