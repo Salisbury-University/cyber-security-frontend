@@ -16,7 +16,7 @@ let searchText = ref("");
 
 // function to signal that challenge list has been filtered
 function filterChallengeList(input: string) {
-  isFiltered.value = true;
+  isFiltered.value = !isFiltered.value;
   searchText.value = input;
 }
 
@@ -113,12 +113,10 @@ function resetFilters() {
     </div>
   </ul>
 
-  <div></div>
-
   <!-- Show easy challenges -->
-  <ul v-if="easyFilter">
+  <ul v-else-if="easyFilter">
     <div v-for="easyIndex in challengeListSize" :key="easyIndex">
-      <div v-if="useChallenge.difficulty[easyIndex - 1] < 4" class="container">
+      <div v-if="useChallenge.difficulty[easyIndex - 1] < 3" class="container">
         <h1>{{ easyIndex }}</h1>
 
         <q-img width="150px" src="{{ useChallenge.image[easyIndex - 1] }}" />
@@ -141,7 +139,7 @@ function resetFilters() {
   <!-- Show medium challenges -->
   <ul v-else-if="mediumFilter">
     <div v-for="medIndex in challengeListSize" :key="medIndex">
-      <div v-if="useChallenge.difficulty[medIndex - 1] == 4" class="container">
+      <div v-if="useChallenge.difficulty[medIndex - 1] >= 3" class="container">
         <h1>{{ medIndex }}</h1>
 
         <q-img width="150px" src="{{ useChallenge.image[medIndex - 1] }}" />
