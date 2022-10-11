@@ -16,7 +16,7 @@ let searchText = ref("");
 
 // function to signal that challenge list has been filtered
 function filterChallengeList(input: string) {
-  isFiltered.value = !isFiltered.value;
+  isFiltered.value = true;
   searchText.value = input;
 }
 
