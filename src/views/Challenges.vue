@@ -84,14 +84,14 @@ function setDiffName(difficulty: string) {
         <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
 
         <span style="margin-left: 50px">
-          <p class="challengeName">{{ useChallenge.name[i - 1] }}</p>
+          <p class="challengeName">
+            <a href="">{{ useChallenge.name[i - 1] }}</a>
+          </p>
           <p class="difficulty">
             Difficulty: {{ useChallenge.difficulty[i - 1] }}
           </p>
           <p class="description">{{ useChallenge.description[i - 1] }}</p>
         </span>
-
-        <!-- Checkbox for completion of challenges here -->
       </div>
     </div>
   </ul>
@@ -108,7 +108,9 @@ function setDiffName(difficulty: string) {
         <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
 
         <span style="margin-left: 50px">
-          <p class="challengeName">{{ useChallenge.name[i - 1] }}</p>
+          <p class="challengeName">
+            <a href="">{{ useChallenge.name[i - 1] }}</a>
+          </p>
           <p class="difficulty">
             Difficulty: {{ useChallenge.difficulty[i - 1] }}
           </p>
@@ -116,8 +118,6 @@ function setDiffName(difficulty: string) {
             {{ useChallenge.description[i - 1] }}
           </p>
         </span>
-
-        <!-- Checkbox for completion of challenges here -->
       </div>
     </div>
   </ul>
@@ -133,15 +133,14 @@ function setDiffName(difficulty: string) {
 
         <!-- Challenge description and difficulty -->
         <span style="margin-left: 50px">
-          <p class="challengeName">{{ useChallenge.name[i - 1] }}</p>
+          <p class="challengeName">
+            <a href="">{{ useChallenge.name[i - 1] }}</a>
+          </p>
           <p class="difficulty">
             Difficulty: {{ useChallenge.difficulty[i - 1] }}
           </p>
           <p class="description">{{ useChallenge.description[i - 1] }}</p>
         </span>
-
-        <!-- Checkbox for completion of challenges here -->
-        <q-checkbox v-model="val">Mark as Completed</q-checkbox>
       </div>
     </li>
   </ul>
@@ -149,6 +148,26 @@ function setDiffName(difficulty: string) {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Goldman");
+
+a {
+  text-decoration: none;
+  color: #2e9cca;
+  position: relative;
+}
+
+a:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  border-bottom: 2px solid #2e9cca;
+  transition: 0.4s;
+}
+
+a:hover:after {
+  width: 100%;
+}
 
 #title {
   font-size: 45px;

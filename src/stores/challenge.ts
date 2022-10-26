@@ -16,6 +16,7 @@ export const useChallengeStore = defineStore("challenge", {
           Authorization: "",
         },
       }),
+      status: [],
     };
   },
 
@@ -139,7 +140,9 @@ export const useChallengeStore = defineStore("challenge", {
             http()
               .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
+                const status = response.data.status;
                 const metadata = response.data.metadata;
+
                 // store individual exercise info in name arr, timeLmit arr, etc.
                 this.name[i] = metadata.title;
                 this.timeLimit[i] = metadata.timeLimit;
