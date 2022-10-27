@@ -231,7 +231,7 @@ a:hover:after {
 
 .description {
   color: #aaabb8;
-  margin-top: -40px;
+  margin-top: -50px;
   font-size: 18px;
   text-align: left;
 }
@@ -239,7 +239,8 @@ a:hover:after {
 .container {
   display: flex;
   margin-left: 310px;
-  margin-top: 50px;
+  margin-top: 40px;
+  margin-bottom: -50px;
 }
 
 .challengeName {
@@ -254,7 +255,7 @@ a:hover:after {
   text-align: left;
   font-size: 18px;
   margin-bottom: 55px;
-  margin-top: -30px;
+  margin-top: -40px;
   color: #464866;
 }
 
