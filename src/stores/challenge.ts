@@ -11,6 +11,7 @@ export const useChallengeStore = defineStore("challenge", {
       difficulty: [],
       description: [],
       image: [],
+      categories: [],
       persistence: useStorage("challenge", {
         header: {
           Authorization: "",
@@ -149,6 +150,7 @@ export const useChallengeStore = defineStore("challenge", {
                 this.description[i] = metadata.description;
                 this.image[i] = metadata.image;
                 this.difficulty[i] = metadata.difficulty;
+                this.categories[i] = metadata.categories;
               });
           }
         });

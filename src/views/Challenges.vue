@@ -8,8 +8,10 @@ const challengeListSize = useChallenge.name.length;
 const filteredBySearch = ref(false);
 const applyDiffFilter = ref(false);
 const diffName = ref("");
+const categoryName = ref("");
 const val = ref(false);
 let searchText = ref("");
+const numOfCategories = useChallenge.categories[0].length;
 useChallenge.setChallenge();
 
 // function to signal that challenge list has been filtered
@@ -24,13 +26,29 @@ function setDiffName(difficulty: string) {
   filteredBySearch.value = false;
   diffName.value = difficulty;
 }
+
+// set the name of category selected
+function setCategory(category: string) {
+  categoryName.value = category;
+}
 </script>
 
 <template>
   <h1 id="title">Challenges</h1>
 
   <!-- Challenge filters -->
-  <q-btn-dropdown label="Category" class="filterOptMenu"> </q-btn-dropdown>
+  <q-btn-dropdown label="Category" class="filterOptMenu">
+    <q-list v-for="i in numOfCategories" :key="i">
+      <!-- Loop through and display categories-->
+      <q-item
+        clickable
+        v-close-popup
+        style="color: #2e9cca"
+        @click="setCategory(useChallenge.categories[0][i - 1])"
+        >{{ useChallenge.categories[0][i - 1] }}</q-item
+      >
+    </q-list>
+  </q-btn-dropdown>
 
   <q-btn-dropdown label="Difficulty" class="filterOptMenu">
     <q-list>
@@ -118,6 +136,34 @@ function setDiffName(difficulty: string) {
             {{ useChallenge.description[i - 1] }}
           </p>
         </span>
+      </div>
+    </div>
+  </ul>
+
+  <!-- Show challenges based on category-->
+  <ul v-else-if="categoryName">
+    <div v-for="i in numOfCategories" :key="i">
+      <div v-for="j in numOfCategories" :key="j">
+        <div
+          v-if="useChallenge.categories[i][j - 1].includes(categoryName)"
+          class="container"
+        >
+          <h1>{{ i }}</h1>
+
+          <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
+
+          <span style="margin-left: 50px">
+            <p class="challengeName">
+              <a href="">{{ useChallenge.name[i - 1] }}</a>
+            </p>
+            <p class="difficulty">
+              Difficulty: {{ useChallenge.difficulty[i - 1] }}
+            </p>
+            <p class="description">
+              {{ useChallenge.description[i - 1] }}
+            </p>
+          </span>
+        </div>
       </div>
     </div>
   </ul>
