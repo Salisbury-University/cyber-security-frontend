@@ -11,7 +11,7 @@ const diffName = ref("");
 const categoryName = ref("");
 const val = ref(false);
 let searchText = ref("");
-const numOfCategories = useChallenge.categories[0].length;
+//const numOfCategories = useChallenge.categories[0].length;
 useChallenge.setChallenge();
 
 // function to signal that challenge list has been filtered
@@ -38,8 +38,7 @@ function setCategory(category: string) {
 
   <!-- Challenge filters -->
   <q-btn-dropdown label="Category" class="filterOptMenu">
-    <q-list v-for="i in numOfCategories" :key="i">
-      <!-- Loop through and display categories-->
+    <q-list v-for="i in 3" :key="i">
       <q-item
         clickable
         v-close-popup
@@ -142,8 +141,8 @@ function setCategory(category: string) {
 
   <!-- Show challenges based on category-->
   <ul v-else-if="categoryName">
-    <div v-for="i in numOfCategories" :key="i">
-      <div v-for="j in numOfCategories" :key="j">
+    <div v-for="i in 3" :key="i">
+      <div v-for="j in 3" :key="j">
         <div
           v-if="useChallenge.categories[i][j - 1].includes(categoryName)"
           class="container"
@@ -231,7 +230,7 @@ a:hover:after {
 
 .description {
   color: #aaabb8;
-  margin-top: -50px;
+  margin-top: -40px;
   font-size: 18px;
   text-align: left;
 }
@@ -255,7 +254,7 @@ a:hover:after {
   text-align: left;
   font-size: 18px;
   margin-bottom: 55px;
-  margin-top: -40px;
+  margin-top: -30px;
   color: #464866;
 }
 
