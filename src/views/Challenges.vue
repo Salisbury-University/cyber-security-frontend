@@ -29,6 +29,20 @@ function setDiffName(difficulty: string) {
 function setCategory(category: string) {
   categoryName.value = category;
 }
+
+/**
+ * Checks if category name is unique
+ * @param category category name
+ * @param index index in category list
+ */
+function isUnique(category: string, index: number) {
+  for (let i = 0; i < index; i++) {
+    for (let j = 0; j < useChallenge.numOfCategories[i]; j++) {
+      if (useChallenge.categories[i][j] === category) return false;
+    }
+  }
+  return true;
+}
 </script>
 
 <template>
@@ -36,15 +50,19 @@ function setCategory(category: string) {
 
   <!-- Challenge filters -->
   <q-btn-dropdown label="Category" class="filterOptMenu">
-    <q-list v-for="i in 3" :key="i">
-      <q-item
-        clickable
-        v-close-popup
-        style="color: #2e9cca"
-        @click="setCategory(useChallenge.categories[0][i - 1])"
-        >{{ useChallenge.categories[0][i - 1] }}</q-item
-      >
-    </q-list>
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
+      <div v-for="j in useChallenge.numOfCategories[i - 1]" :key="j">
+        <q-list v-if="isUnique(useChallenge.categories[i - 1][j - 1], i - 1)">
+          <q-item
+            clickable
+            v-close-popup
+            style="color: #2e9cca"
+            @click="setCategory(useChallenge.categories[i - 1][j - 1])"
+            >{{ useChallenge.categories[i - 1][j - 1] }}</q-item
+          >
+        </q-list>
+      </div>
+    </div>
   </q-btn-dropdown>
 
   <q-btn-dropdown label="Difficulty" class="filterOptMenu">
@@ -139,10 +157,10 @@ function setCategory(category: string) {
 
   <!-- Show challenges based on category-->
   <ul v-else-if="categoryName">
-    <div v-for="i in 3" :key="i">
-      <div v-for="j in 3" :key="j">
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
+      <div v-for="j in useChallenge.numOfCategories[i - 1]" :key="j">
         <div
-          v-if="useChallenge.categories[i][j - 1].includes(categoryName)"
+          v-if="useChallenge.categories[i - 1][j - 1].includes(categoryName)"
           class="container"
         >
           <h1>{{ i }}</h1>

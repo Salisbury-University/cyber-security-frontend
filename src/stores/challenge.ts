@@ -19,6 +19,7 @@ export const useChallengeStore = defineStore("challenge", {
       }),
       status: [],
       challengeListSize: 0,
+      numOfCategories: [],
     };
   },
 
@@ -81,6 +82,15 @@ export const useChallengeStore = defineStore("challenge", {
     getListSize(state: any): number {
       return state.challengeListSize;
     },
+
+    /**
+     * Gets number of categories for each challenge
+     * @param {any} state
+     * @returns how many categories a challenge has
+     */
+    getnumOfCategories(state: any): number {
+      return state.numOfCategories;
+    },
   },
 
   actions: {
@@ -131,10 +141,18 @@ export const useChallengeStore = defineStore("challenge", {
 
     /**
      * Set the challenge list size
-     * @param newListSize
+     * @param newListSize list size
      */
-    setListSize(newListSize: number) {
+    setListSize(newListSize: number): void {
       this.challengeListSize = newListSize;
+    },
+
+    /**
+     * Set number of categories for each challenge
+     * @param categoryNum number of categories
+     */
+    setnumOfCategories(numOfCategories: number): void {
+      this.numOfCategories = numOfCategories;
     },
 
     /**
@@ -158,6 +176,7 @@ export const useChallengeStore = defineStore("challenge", {
 
           // array of axios calls to get individual exercise
           for (let i = 0; i < info.length; i++) {
+            let categoryCount = 0;
             http()
               .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
@@ -171,6 +190,12 @@ export const useChallengeStore = defineStore("challenge", {
                 this.image[i] = metadata.image;
                 this.difficulty[i] = metadata.difficulty;
                 this.categories[i] = metadata.categories;
+
+                while (this.categories[i][categoryCount] != null) {
+                  categoryCount++;
+                }
+
+                this.numOfCategories[i] = categoryCount;
               });
           }
         });
