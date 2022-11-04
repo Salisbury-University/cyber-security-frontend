@@ -4,14 +4,12 @@ import SearchBar from "../components/SearchBar.vue";
 import { ref } from "vue";
 
 const useChallenge = useChallengeStore();
-const challengeListSize = useChallenge.name.length;
 const filteredBySearch = ref(false);
 const applyDiffFilter = ref(false);
 const diffName = ref("");
 const categoryName = ref("");
 const val = ref(false);
 let searchText = ref("");
-//const numOfCategories = useChallenge.categories[0].length;
 useChallenge.setChallenge();
 
 // function to signal that challenge list has been filtered
@@ -87,7 +85,7 @@ function setCategory(category: string) {
 
   <!-- Filtered Challenge list after search input-->
   <ul v-if="filteredBySearch">
-    <div v-for="i in challengeListSize" :key="i">
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
       <div
         v-if="
           useChallenge.name[i - 1]
@@ -115,7 +113,7 @@ function setCategory(category: string) {
 
   <!-- Show challegnes based on difficulty -->
   <ul v-else-if="applyDiffFilter">
-    <div v-for="i in challengeListSize" :key="i">
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
       <div
         v-if="useChallenge.difficulty[i - 1].includes(diffName)"
         class="container"
@@ -169,7 +167,7 @@ function setCategory(category: string) {
 
   <!-- Default challenge list -->
   <ul v-else>
-    <li v-for="i in challengeListSize" :key="i">
+    <li v-for="i in useChallenge.challengeListSize" :key="i">
       <div class="container">
         <h1>{{ i }}</h1>
 
@@ -179,7 +177,7 @@ function setCategory(category: string) {
         <!-- Challenge description and difficulty -->
         <span style="margin-left: 50px">
           <p class="challengeName">
-            <a href="">{{ useChallenge.name[i - 1] }}</a>
+            <a href="/challeneges/">{{ useChallenge.name[i - 1] }}</a>
           </p>
           <p class="difficulty">
             Difficulty: {{ useChallenge.difficulty[i - 1] }}

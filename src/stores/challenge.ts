@@ -18,6 +18,7 @@ export const useChallengeStore = defineStore("challenge", {
         },
       }),
       status: [],
+      challengeListSize: 0,
     };
   },
 
@@ -71,6 +72,15 @@ export const useChallengeStore = defineStore("challenge", {
     getImage(state: any): string {
       return state.image;
     },
+
+    /**
+     * Gets the size of the challenge list
+     * @param {any} state
+     * @returns {number} challenge list size
+     */
+    getListSize(state: any): number {
+      return state.challengeListSize;
+    },
   },
 
   actions: {
@@ -120,6 +130,14 @@ export const useChallengeStore = defineStore("challenge", {
     },
 
     /**
+     * Set the challenge list size
+     * @param newListSize
+     */
+    setListSize(newListSize: number) {
+      this.challengeListSize = newListSize;
+    },
+
+    /**
      * Grabs info for challenge
      */
     setChallenge(): void {
@@ -135,6 +153,8 @@ export const useChallengeStore = defineStore("challenge", {
         })
         .then((res) => {
           const info = res.data.exercises;
+
+          this.challengeListSize = info.length;
 
           // array of axios calls to get individual exercise
           for (let i = 0; i < info.length; i++) {
