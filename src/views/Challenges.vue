@@ -12,20 +12,29 @@ const val = ref(false);
 let searchText = ref("");
 useChallenge.setChallenge();
 
-// function to signal that challenge list has been filtered
+/**
+ * Signals that challenge list has been filtered
+ * @param input text from search bar
+ */
 function filterChallengeList(input: string) {
   filteredBySearch.value = true;
   searchText.value = input;
 }
 
-// set name of difficulty (easy, medium, hard)
+/**
+ * Sets name of challenge difficulty
+ * @param difficulty name of challenge difficulty
+ */
 function setDiffName(difficulty: string) {
   applyDiffFilter.value = true;
   filteredBySearch.value = false;
   diffName.value = difficulty;
 }
 
-// set the name of category selected
+/**
+ * Sets the name of category selected
+ * @param category category name
+ */
 function setCategory(category: string) {
   categoryName.value = category;
 }
