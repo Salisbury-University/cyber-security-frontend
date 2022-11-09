@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
+import ChallengeItem from "../components/ChallengeItem.vue";
 import SearchBar from "../components/SearchBar.vue";
 import { ref } from "vue";
 
@@ -119,21 +120,8 @@ function isUnique(category: string, index: number) {
             .toLowerCase()
             .includes(searchText.toLowerCase()) && searchText
         "
-        class="container"
       >
-        <h1>{{ i }}</h1>
-
-        <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
-
-        <span style="margin-left: 50px">
-          <p class="challengeName">
-            <a href="">{{ useChallenge.name[i - 1] }}</a>
-          </p>
-          <p class="difficulty">
-            Difficulty: {{ useChallenge.difficulty[i - 1] }}
-          </p>
-          <p class="description">{{ useChallenge.description[i - 1] }}</p>
-        </span>
+        <ChallengeItem :challengeIndex="i"></ChallengeItem>
       </div>
     </div>
   </ul>
@@ -141,25 +129,8 @@ function isUnique(category: string, index: number) {
   <!-- Show challegnes based on difficulty -->
   <ul v-else-if="applyDiffFilter">
     <div v-for="i in useChallenge.challengeListSize" :key="i">
-      <div
-        v-if="useChallenge.difficulty[i - 1].includes(diffName)"
-        class="container"
-      >
-        <h1>{{ i }}</h1>
-
-        <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
-
-        <span style="margin-left: 50px">
-          <p class="challengeName">
-            <a href="">{{ useChallenge.name[i - 1] }}</a>
-          </p>
-          <p class="difficulty">
-            Difficulty: {{ useChallenge.difficulty[i - 1] }}
-          </p>
-          <p class="description">
-            {{ useChallenge.description[i - 1] }}
-          </p>
-        </span>
+      <div v-if="useChallenge.difficulty[i - 1].includes(diffName)">
+        <ChallengeItem :challengeIndex="i"></ChallengeItem>
       </div>
     </div>
   </ul>
@@ -170,23 +141,8 @@ function isUnique(category: string, index: number) {
       <div v-for="j in useChallenge.numOfCategories[i - 1]" :key="j">
         <div
           v-if="useChallenge.categories[i - 1][j - 1].includes(categoryName)"
-          class="container"
         >
-          <h1>{{ i }}</h1>
-
-          <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
-
-          <span style="margin-left: 50px">
-            <p class="challengeName">
-              <a href="">{{ useChallenge.name[i - 1] }}</a>
-            </p>
-            <p class="difficulty">
-              Difficulty: {{ useChallenge.difficulty[i - 1] }}
-            </p>
-            <p class="description">
-              {{ useChallenge.description[i - 1] }}
-            </p>
-          </span>
+          <ChallengeItem :challengeIndex="i"></ChallengeItem>
         </div>
       </div>
     </div>
@@ -195,49 +151,13 @@ function isUnique(category: string, index: number) {
   <!-- Default challenge list -->
   <ul v-else>
     <li v-for="i in useChallenge.challengeListSize" :key="i">
-      <div class="container">
-        <h1>{{ i }}</h1>
-
-        <!-- Challenge image -->
-        <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
-
-        <!-- Challenge description and difficulty -->
-        <span style="margin-left: 50px">
-          <p class="challengeName">
-            <a href="/challeneges/">{{ useChallenge.name[i - 1] }}</a>
-          </p>
-          <p class="difficulty">
-            Difficulty: {{ useChallenge.difficulty[i - 1] }}
-          </p>
-          <p class="description">{{ useChallenge.description[i - 1] }}</p>
-        </span>
-      </div>
+      <ChallengeItem :challengeIndex="i"></ChallengeItem>
     </li>
   </ul>
 </template>
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Goldman");
-
-a {
-  text-decoration: none;
-  color: #2e9cca;
-  position: relative;
-}
-
-a:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  border-bottom: 2px solid #2e9cca;
-  transition: 0.4s;
-}
-
-a:hover:after {
-  width: 100%;
-}
 
 #title {
   font-size: 45px;
@@ -251,36 +171,6 @@ a:hover:after {
   margin-right: 500px;
   background-color: #464866;
   color: #aaabb8;
-}
-
-.description {
-  color: #aaabb8;
-  margin-top: -40px;
-  font-size: 18px;
-  text-align: left;
-}
-
-.container {
-  display: flex;
-  margin-left: 310px;
-  margin-top: 40px;
-  margin-bottom: -50px;
-}
-
-.challengeName {
-  color: #2e9cca;
-  font-size: 30px;
-  margin-bottom: 40px;
-  margin-top: 50px;
-  font-weight: bold;
-}
-
-.difficulty {
-  text-align: left;
-  font-size: 18px;
-  margin-bottom: 55px;
-  margin-top: -30px;
-  color: #464866;
 }
 
 .filterOptMenu {
