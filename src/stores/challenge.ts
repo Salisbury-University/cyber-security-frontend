@@ -172,6 +172,7 @@ export const useChallengeStore = defineStore("challenge", {
                 this.image[i] = metadata.image;
                 this.difficulty[i] = metadata.difficulty;
                 this.categories[i] = metadata.categories;
+                this.status[i] = status.status;
               });
           }
         });

@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import MainLayout from "../Layout/Main.vue";
 import Index from "../views/Index.vue";
 import Challenges from "../views/Challenges.vue";
+import ExercisePage from "../views/ExercisePage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,11 @@ const routes: Array<RouteRecordRaw> = [
         // Challenges page
         path: "/challenges",
         component: Challenges,
+      },
+      {
+        // Individual exercise page
+        path: "/challenges/exercise",
+        component: ExercisePage,
       },
     ],
   },

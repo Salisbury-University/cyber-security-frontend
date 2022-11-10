@@ -22,7 +22,9 @@ const props = defineProps({
     <!-- Challenge Information (name, difficulty, description) -->
     <span style="margin-left: 50px">
       <p id="challengeName">
-        <a href="/challeneges/">{{ useChallenge.name[challengeIndex - 1] }}</a>
+        <a href="/challenges/exercise">{{
+          useChallenge.name[challengeIndex - 1]
+        }}</a>
       </p>
       <p id="difficulty">
         Difficulty: {{ useChallenge.difficulty[challengeIndex - 1] }}
