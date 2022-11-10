@@ -47,7 +47,7 @@ function setCategory(category: string) {
  */
 function isUnique(category: string, index: number) {
   for (let i = 0; i < index; i++) {
-    for (let j = 0; j < useChallenge[i].length; j++) {
+    for (let j = 0; j < useChallenge.categories[i].length; j++) {
       if (useChallenge.categories[i][j] === category) return false;
     }
   }
@@ -61,7 +61,7 @@ function isUnique(category: string, index: number) {
   <!-- Challenge filters -->
   <q-btn-dropdown label="Category" class="filterOptMenu">
     <div v-for="i in useChallenge.challengeListSize" :key="i">
-      <div v-for="j in useChallenge[i - 1].length" :key="j">
+      <div v-for="j in useChallenge.categories[i - 1].length" :key="j">
         <q-list v-if="isUnique(useChallenge.categories[i - 1][j - 1], i - 1)">
           <q-item
             clickable
@@ -138,7 +138,7 @@ function isUnique(category: string, index: number) {
   <!-- Show challenges based on category-->
   <ul v-else-if="categoryName">
     <div v-for="i in useChallenge.challengeListSize" :key="i">
-      <div v-for="j in useChallenge[i - 1].length" :key="j">
+      <div v-for="j in useChallenge.categories[i - 1].length" :key="j">
         <div
           v-if="useChallenge.categories[i - 1][j - 1].includes(categoryName)"
         >

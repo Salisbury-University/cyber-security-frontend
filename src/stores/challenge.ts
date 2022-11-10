@@ -158,7 +158,6 @@ export const useChallengeStore = defineStore("challenge", {
 
           // array of axios calls to get individual exercise
           for (let i = 0; i < info.length; i++) {
-            let categoryCount = 0;
             http()
               .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
