@@ -1,20 +1,57 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
+import ChallengeItem from "../components/ChallengeItem.vue";
 import SearchBar from "../components/SearchBar.vue";
 import { ref } from "vue";
 
 const useChallenge = useChallengeStore();
+const filteredBySearch = ref(false);
+const applyDiffFilter = ref(false);
+const diffName = ref("");
+const categoryName = ref("");
+const val = ref(false);
+let searchText = ref("");
 useChallenge.setChallenge();
 
-const challengeListSize = useChallenge.name.length;
-const isFiltered = ref(false);
-
-let searchText = ref("");
-
-// function to signal that challenge list has been filtered
+/**
+ * Signals that challenge list has been filtered
+ * @param input text from search bar
+ */
 function filterChallengeList(input: string) {
-  isFiltered.value = true;
+  filteredBySearch.value = true;
   searchText.value = input;
+}
+
+/**
+ * Sets name of challenge difficulty
+ * @param difficulty name of challenge difficulty
+ */
+function setDiffName(difficulty: string) {
+  applyDiffFilter.value = true;
+  filteredBySearch.value = false;
+  diffName.value = difficulty;
+}
+
+/**
+ * Sets the name of category selected
+ * @param category category name
+ */
+function setCategory(category: string) {
+  categoryName.value = category;
+}
+
+/**
+ * Checks if category name is unique
+ * @param category category name
+ * @param index index in category list
+ */
+function isUnique(category: string, index: number) {
+  for (let i = 0; i < index; i++) {
+    for (let j = 0; j < useChallenge.categories[i].length; j++) {
+      if (useChallenge.categories[i][j] === category) return false;
+    }
+  }
+  return true;
 }
 </script>
 
@@ -22,79 +59,99 @@ function filterChallengeList(input: string) {
   <h1 id="title">Challenges</h1>
 
   <!-- Challenge filters -->
-  <q-btn class="filter" style="margin-right: 25px" label="Category">
-    <q-menu></q-menu>
-  </q-btn>
+  <q-btn-dropdown label="Category" class="filterOptMenu">
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
+      <div v-for="j in useChallenge.categories[i - 1].length" :key="j">
+        <q-list v-if="isUnique(useChallenge.categories[i - 1][j - 1], i - 1)">
+          <q-item
+            clickable
+            v-close-popup
+            style="color: #2e9cca"
+            @click="setCategory(useChallenge.categories[i - 1][j - 1])"
+            >{{ useChallenge.categories[i - 1][j - 1] }}</q-item
+          >
+        </q-list>
+      </div>
+    </div>
+  </q-btn-dropdown>
 
-  <q-btn class="filter" style="margin-right: 25px" label="Difficulty">
-    <q-menu>
-      <q-list>
-        <q-item clickable v-close-popup>
-          <q-item-section>Easy</q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup>
-          <q-item-section>Medium</q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup>
-          <q-item-section>Hard</q-item-section>
-        </q-item>
-      </q-list>
-    </q-menu>
-  </q-btn>
+  <q-btn-dropdown label="Difficulty" class="filterOptMenu">
+    <q-list>
+      <q-item
+        clickable
+        v-close-popup
+        class="text-green-5"
+        @click="setDiffName('Easy')"
+      >
+        <q-item-section>Easy</q-item-section>
+      </q-item>
+
+      <q-item
+        clickable
+        v-close-popup
+        class="text-orange-7"
+        @click="setDiffName('Medium')"
+      >
+        <q-item-section>Medium</q-item-section>
+      </q-item>
+
+      <q-item
+        clickable
+        v-close-popup
+        class="text-red-7"
+        @click="setDiffName('Hard')"
+      >
+        <q-item-section>Hard</q-item-section>
+      </q-item>
+    </q-list>
+  </q-btn-dropdown>
 
   <q-btn class="filter" label="Completed"></q-btn>
 
   <!-- Search bar -->
   <SearchBar @applyChallengeFilter="filterChallengeList($event)" />
 
-  <!-- Filtered Challenge list after search-->
-  <ul v-if="isFiltered">
-    <div v-for="i in challengeListSize" :key="i">
+  <!-- Filtered Challenge list after search input-->
+  <ul v-if="filteredBySearch">
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
       <div
         v-if="
           useChallenge.name[i - 1]
             .toLowerCase()
-            .includes(searchText.toLowerCase())
+            .includes(searchText.toLowerCase()) && searchText
         "
-        class="container"
       >
-        <h1>{{ i }}</h1>
+        <ChallengeItem :challengeIndex="i"></ChallengeItem>
+      </div>
+    </div>
+  </ul>
 
-        <q-img width="150px" src="{{ useChallenge.image[i - 1] }}" />
+  <!-- Show challegnes based on difficulty -->
+  <ul v-else-if="applyDiffFilter">
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
+      <div v-if="useChallenge.difficulty[i - 1].includes(diffName)">
+        <ChallengeItem :challengeIndex="i"></ChallengeItem>
+      </div>
+    </div>
+  </ul>
 
-        <span style="margin-left: 50px">
-          <p class="challengeName">{{ useChallenge.name[i - 1] }}</p>
-          <p class="difficulty">
-            Difficulty: {{ useChallenge.difficulty[i - 1] }}
-          </p>
-          <p class="description">{{ useChallenge.description[i - 1] }}</p>
-        </span>
-
-        <!-- Checkbox for completion of challenges here -->
+  <!-- Show challenges based on category-->
+  <ul v-else-if="categoryName">
+    <div v-for="i in useChallenge.challengeListSize" :key="i">
+      <div v-for="j in useChallenge.categories[i - 1].length" :key="j">
+        <div
+          v-if="useChallenge.categories[i - 1][j - 1].includes(categoryName)"
+        >
+          <ChallengeItem :challengeIndex="i"></ChallengeItem>
+        </div>
       </div>
     </div>
   </ul>
 
   <!-- Default challenge list -->
   <ul v-else>
-    <li v-for="index in challengeListSize" :key="index">
-      <div class="container">
-        <h1>{{ index }}</h1>
-
-        <!-- Challenge image -->
-        <q-img width="150px" src="{{ useChallenge.image[index - 1] }}" />
-
-        <!-- Challenge description and difficulty -->
-        <span style="margin-left: 50px">
-          <p class="challengeName">{{ useChallenge.name[index - 1] }}</p>
-          <p class="difficulty">
-            Difficulty: {{ useChallenge.difficulty[index - 1] }}
-          </p>
-          <p class="description">{{ useChallenge.description[index - 1] }}</p>
-        </span>
-
-        <!-- Checkbox for completion of challenges here -->
-      </div>
+    <li v-for="i in useChallenge.challengeListSize" :key="i">
+      <ChallengeItem :challengeIndex="i"></ChallengeItem>
     </li>
   </ul>
 </template>
@@ -116,32 +173,9 @@ function filterChallengeList(input: string) {
   color: #aaabb8;
 }
 
-.description {
+.filterOptMenu {
+  background-color: #464866;
   color: #aaabb8;
-  margin-top: -40px;
-  font-size: 18px;
-  text-align: left;
-}
-
-.container {
-  display: flex;
-  margin-left: 310px;
-  margin-top: 50px;
-}
-
-.challengeName {
-  color: #2e9cca;
-  font-size: 30px;
-  margin-bottom: 40px;
-  margin-top: 50px;
-  font-weight: bold;
-}
-
-.difficulty {
-  text-align: left;
-  font-size: 18px;
-  margin-bottom: 55px;
-  margin-top: -30px;
-  color: #464866;
+  margin-right: 20px;
 }
 </style>

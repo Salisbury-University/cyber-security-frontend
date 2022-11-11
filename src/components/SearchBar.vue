@@ -14,10 +14,13 @@ const text = ref("");
         outlined
         v-model="text"
         placeholder="Search Challenges"
+        @keydown="$emit('applyChallengeFilter', text)"
       >
-        <q-btn round flat @click="$emit('applyChallengeFilter', text)">
-          <q-icon name="search" size="28px" />
-        </q-btn>
+        <template v-slot:append>
+          <q-btn round flat @click="$emit('applyChallengeFilter', text)">
+            <q-icon name="search" size="28px" />
+          </q-btn>
+        </template>
       </q-input>
     </q-form>
   </div>

@@ -11,11 +11,14 @@ export const useChallengeStore = defineStore("challenge", {
       difficulty: [],
       description: [],
       image: [],
+      categories: [],
       persistence: useStorage("challenge", {
         header: {
           Authorization: "",
         },
       }),
+      status: [],
+      challengeListSize: 0,
     };
   },
 
@@ -69,6 +72,15 @@ export const useChallengeStore = defineStore("challenge", {
     getImage(state: any): string {
       return state.image;
     },
+
+    /**
+     * Gets the size of the challenge list
+     * @param {any} state
+     * @returns {number} challenge list size
+     */
+    getListSize(state: any): number {
+      return state.challengeListSize;
+    },
   },
 
   actions: {
@@ -118,6 +130,14 @@ export const useChallengeStore = defineStore("challenge", {
     },
 
     /**
+     * Set the challenge list size
+     * @param newListSize list size
+     */
+    setListSize(newListSize: number): void {
+      this.challengeListSize = newListSize;
+    },
+
+    /**
      * Grabs info for challenge
      */
     setChallenge(): void {
@@ -134,18 +154,23 @@ export const useChallengeStore = defineStore("challenge", {
         .then((res) => {
           const info = res.data.exercises;
 
+          this.challengeListSize = info.length;
+
           // array of axios calls to get individual exercise
           for (let i = 0; i < info.length; i++) {
             http()
               .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
+                const status = response.data.status;
                 const metadata = response.data.metadata;
+
                 // store individual exercise info in name arr, timeLmit arr, etc.
                 this.name[i] = metadata.title;
                 this.timeLimit[i] = metadata.timeLimit;
                 this.description[i] = metadata.description;
                 this.image[i] = metadata.image;
                 this.difficulty[i] = metadata.difficulty;
+                this.categories[i] = metadata.categories;
               });
           }
         });
