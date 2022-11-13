@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         // Individual exercise page
-        path: "/challenges/exercise",
+        path: "/challenges/:title",
         component: ExercisePage,
       },
     ],

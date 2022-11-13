@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
-<template></template>
+<template>
+  <h1>{{ $route.params.title }}</h1>
+</template>
 
 <style></style>
