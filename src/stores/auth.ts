@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("auth", {
         header: {
           Authorization: "",
         },
+        loginState: false,
       }),
     };
   },
@@ -21,7 +22,7 @@ export const useAuthStore = defineStore("auth", {
      * @return {boolean} showLogin state
      */
     getShowLogin(state): boolean {
-      return state.nonpersistence.showLogin;
+      return state.persistence.loginState;
     },
 
     /**

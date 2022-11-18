@@ -4,7 +4,7 @@ import { useAuthStore } from "../stores/auth";
 
 const useAuth = useAuthStore();
 
-useAuth.modalEventListener();
+// useAuth.modalEventListener();
 
 const props = defineProps({
   ["loginModal"]: {
