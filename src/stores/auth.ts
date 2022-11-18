@@ -1,23 +1,15 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
-import http from "../http";
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
     return {
-      nonpersistence: {
-        username: "",
-        password: "",
-        showLogin: false,
-        loginAnimation: false,
-      },
       persistence: useStorage("auth", {
         token: "",
         header: {
           Authorization: "",
         },
-        loggedIn: false,
-      }) as any,
+      }),
     };
   },
 
@@ -65,58 +57,11 @@ export const useAuthStore = defineStore("auth", {
 
   actions: {
     /**
-     * Login
+     * Sets the token information
      */
-    login(): void {
-      this.setLoginAnimation(true);
-
-      // Disables submit button
-      const doc = document.getElementById("login-submit");
-      doc!.setAttribute("disabled", "true");
-
-      // Gets the failed message dom
-      const docFailed = document.getElementById("login-fail");
-
-      // Makes axios call
-      http()
-        .post("/api/v1/auth/login", {
-          username: this.nonpersistence.username,
-          password: this.nonpersistence.password,
-          Headers: {
-            Authorization: "Bearer " + this.persistence.token,
-          },
-        })
-        .then((res) => {
-          doc!.removeAttribute("disabled");
-          this.setLoginAnimation(false);
-          this.setLoggedIn(true);
-
-          console.log(this.getLoginAnimation);
-          docFailed!.style.opacity = "0";
-          console.log(res.data);
-          this.setShowLogin(false);
-        })
-        .catch((err) => {
-          console.log(this.nonpersistence.username);
-          console.log(this.nonpersistence.password);
-          setTimeout(() => {
-            doc!.removeAttribute("disabled");
-            this.setLoginAnimation(false);
-          }, 2000);
-
-          docFailed!.style.opacity = "1";
-        });
-
-      // Make it so that it can be submitted only once every second
-    },
-
-    /**
-     * Sets the token
-     *
-     * @param {string} token response token from login
-     */
-    setToken(token: string): void {
-      this.persistence.token = token;
+    setToken(): void {
+      this.persistence.token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
     },
 
     /**
@@ -126,47 +71,6 @@ export const useAuthStore = defineStore("auth", {
       this.persistence.header.Authorization = "Bearer ".concat(
         this.persistence.token
       );
-    },
-
-    /**
-     * Sets showLogin state
-     *
-     * @param {boolean} bool boolean to determine if login should be shown
-     */
-    setShowLogin(bool: boolean): void {
-      this.nonpersistence.showLogin = bool;
-    },
-
-    /**
-     * Modal event listener to exit on esc
-     */
-    modalEventListener(): void {
-      document.onkeydown = (e) => {
-        // Exit with esc screen on login modal
-        if (this.nonpersistence.showLogin) {
-          if (e.key === "Escape") {
-            this.setShowLogin(false);
-          }
-        }
-      };
-    },
-
-    /**
-     * Sets login attempt spinning animation
-     *
-     * @param {boolean} bool boolean to determine page running animation
-     */
-    setLoginAnimation(bool: boolean): void {
-      this.nonpersistence.loginAnimation = bool;
-    },
-
-    /**
-     * Set loggin bool for login modal
-     *
-     * @param {boolean} bool boolean to determine user is logged in
-     */
-    setLoggedIn(bool: boolean): void {
-      this.persistence.loggedIn = bool;
     },
   },
 });
