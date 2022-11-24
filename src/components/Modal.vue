@@ -4,13 +4,17 @@ import { useAuthStore } from "../stores/auth";
 
 const useAuth = useAuthStore();
 
-// useAuth.modalEventListener();
-
 const props = defineProps({
   ["loginModal"]: {
     type: Boolean,
   },
 });
+
+const exit = () => {
+  useAuth.setModalState(false);
+  useAuth.setUsername("");
+  useAuth.setPassword("");
+};
 </script>
 
 <template>
@@ -33,7 +37,7 @@ const props = defineProps({
             flat
             round
             dense
-            @click="useAuth.setShowLogin(false)"
+            @click="exit()"
           />
         </q-card-section>
         <q-card-section>
@@ -46,7 +50,7 @@ const props = defineProps({
               id="login-username"
               rounded
               standout="bg-focusedInput"
-              v-model="useAuth.nonpersistence.username"
+              v-model="useAuth.username"
               label="Username"
               class="input"
               autofocus
@@ -57,7 +61,7 @@ const props = defineProps({
               rounded
               type="password"
               standout="bg-focusedInput"
-              v-model="useAuth.nonpersistence.password"
+              v-model="useAuth.password"
               label="Password"
               class="input"
               required
@@ -71,9 +75,8 @@ const props = defineProps({
                 padding="xs lg"
                 rounded
                 class="btn-bg"
-                ><span v-if="!useAuth.getLoginAnimation">sign-in</span>
-                <q-spinner v-if="useAuth.getLoginAnimation"> </q-spinner
-              ></q-btn>
+                ><span>sign-in</span>
+              </q-btn>
             </div>
           </q-form>
         </q-card-section>
