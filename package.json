@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@novnc/novnc": "^1.3.0",
     "@quasar/extras": "^1.12.5",
     "@vueuse/core": "^8.4.2",
     "axios": "^0.27.2",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.0.4",
+    "@types/novnc__novnc": "^1.3.0",
     "@vitejs/plugin-vue": "^2.2.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
