@@ -22,14 +22,18 @@ const props = defineProps({
     <!-- Challenge Information (name, difficulty, description) -->
     <span style="margin-left: 50px">
       <p id="challengeName">
-        <a :href="'/challenges/' + useChallenge.name[challengeIndex - 1]">{{
-          useChallenge.name[challengeIndex - 1]
-        }}</a>
+        <a
+          :href="'/challenges/' + useChallenge.name[challengeIndex - 1]"
+          onClick=""
+          >{{ useChallenge.name[challengeIndex - 1] }}</a
+        >
       </p>
       <p id="difficulty">
         Difficulty: {{ useChallenge.difficulty[challengeIndex - 1] }}
       </p>
-      <p id="description">{{ useChallenge.description[challengeIndex - 1] }}</p>
+      <p class="description" style="margin-top: -40px">
+        {{ useChallenge.description[challengeIndex - 1] }}
+      </p>
     </span>
   </div>
 </template>
@@ -55,15 +59,8 @@ a:hover:after {
   width: 100%;
 }
 
-#id {
-  display: flex;
-  margin-left: 310px;
-  margin-top: 50px;
-}
-
-#description {
+.description {
   color: #aaabb8;
-  margin-top: -40px;
   font-size: 18px;
   text-align: left;
 }

@@ -141,16 +141,9 @@ export const useChallengeStore = defineStore("challenge", {
      * Grabs info for challenge
      */
     setChallenge(): void {
-      useAuthStore().setToken();
-      useAuthStore().setAuthorizationHeader();
-
       // axios call
       http()
-        .get("/api/v1/exercises", {
-          headers: {
-            Authorization: useAuthStore().persistence.header.Authorization,
-          },
-        })
+        .get("/api/v1/exercises", {})
         .then((res) => {
           const info = res.data.exercises;
 
@@ -166,7 +159,7 @@ export const useChallengeStore = defineStore("challenge", {
 
                 // store individual exercise info in name arr, timeLmit arr, etc.
                 this.name[i] = metadata.title;
-                this.timeLimit[i] = metadata.timeLimit;
+                this.timeLimit[i] = metadata.timelimit;
                 this.description[i] = metadata.description;
                 this.image[i] = metadata.image;
                 this.difficulty[i] = metadata.difficulty;
@@ -174,6 +167,24 @@ export const useChallengeStore = defineStore("challenge", {
                 this.status[i] = status.status;
               });
           }
+        });
+    },
+
+    getChallenge(title: string) {
+      http()
+        .get("/api/v1/exercise/".concat(title))
+        .then((response) => {
+          const status = response.data.status;
+          const metadata = response.data.metadata;
+
+          // store individual exercise info in name arr, timeLmit arr, etc.
+          this.name[0] = metadata.title;
+          this.timeLimit[0] = metadata.timelimit;
+          this.description[0] = metadata.description;
+          this.image[0] = metadata.image;
+          this.difficulty[0] = metadata.difficulty;
+          this.categories[0] = metadata.categories;
+          this.status[0] = status.status;
         });
     },
   },

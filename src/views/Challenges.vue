@@ -164,7 +164,7 @@ function isUnique(category: string, index: number) {
   font-family: Goldman;
   color: #2e9cca;
   text-align: center;
-  margin-top: -60px;
+  margin-top: 0px;
 }
 
 .filter {
