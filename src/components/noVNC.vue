@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import RFB from "@novnc/novnc/core/rfb";
 import http from "../http";
-import { onMounted, ref } from "vue";
+import { IframeHTMLAttributes, onMounted, ref } from "vue";
 
 const props = defineProps({
   ["node"]: {
@@ -14,29 +14,57 @@ const props = defineProps({
 
 console.log("novnc");
 
-// Ask to open up the
+// Force element to exist
+const novnc: any = ref(null);
+const novnc2: any = ref(null);
 http()
   .post("/api/v1/exercise/novnc", {
     node: "node",
     vmid: "107",
   })
   .then((res) => {
-    console.log(res);
+    const data = res.data;
+    console.log(novnc2);
+    const url =
+      "https://ip:8006/?console=kvm&novnc=1&vmid=107&node=node&resize=off&vncticket=" +
+      data.ticket +
+      "cmd=";
+    // novnc2.src = url;
+    const id = document.getElementById("novnc2") as IframeHTMLAttributes | null;
+    id!.src = url;
   });
-
-// Force element to exist
-const novnc: any = ref(null);
-
 // Using ref for element getting
-// onMounted(()=>{
-//     let rfb = new RFB(novnc.value, "wss://localhost:3000/api/v1/exercise/novnc")
-//     rfb.addEventListener('connect', (e) => console.log(e))
-//     rfb.addEventListener('disconnect', (e) => console.log(e))
-// })
+onMounted(() => {
+  // http()
+  // .post("/api/v1/exercise/novnc", {
+  //   node: "node",
+  //   vmid: "107",
+  // })
+  // .then((res) => {
+  //   const data = res.data;
+  // let rfb = new RFB(novnc.value, "wss://".concat(
+  //   data.url,
+  //   "/api2/json/nodes/",
+  //     data.node,
+  //     "/qemu/",
+  //     data.vmid,
+  //     "/vncwebsocket?port=",
+  //     data.port,
+  //     "&vncticket=",
+  //     data.ticket
+  // ))
+  // rfb.addEventListener('connect', (e) => console.log(e))
+  // rfb.addEventListener('disconnect', (e) => console.log(e))
+  // console.log(novnc2)
+  // novnc2.src = "https://192.168.0.87:8006/?console=kvm&novnc=1&vmid=107&node=node&resize=off&vncticket="+data.ticket+"cmd="
+  // novnc2.contentWindow.location.reload(true);
+  // });
+});
 </script>
 
 <template>
   <div id="novncHere" ref="novnc"></div>
+  <iframe id="novnc2" ref="novnc2" src=""></iframe>
 </template>
 
 <style></style>
