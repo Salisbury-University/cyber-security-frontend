@@ -5,19 +5,28 @@ import Card from "../components/Card.vue";
 import { useAuthStore } from "../stores/auth";
 import { setCssVar } from "quasar";
 import Darkmode from "../components/Darkmode.vue";
+import { useQuasar } from "quasar";
 
 const useAuth = useAuthStore();
+const $q = useQuasar();
 
 const drawer = ref(false);
 const miniState = ref(true);
 
 const bio = ref("Default bio\n CyberSecurity Team");
 
+// Sets the login modal to true or false
 const toggleModal = () => {
   useAuth.getModalState
     ? useAuth.setModalState(false)
     : useAuth.setModalState(true);
 };
+
+// Gets the darkmode preference if logged in
+if (useAuth.getLoginStatus && useAuth.getToken != "") {
+  useAuth.getPreference();
+  $q.dark.set(useAuth.getDarkmode);
+}
 </script>
 
 <template>

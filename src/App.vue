@@ -14,7 +14,7 @@
 /* Lightmode css */
 .body--light {
   --q-primary: white;
-  --q-secondary: white;
+  --q-secondary: rgb(216, 216, 216);
   --q-accent: black;
 
   --q-positive: white;
@@ -30,8 +30,8 @@
 
 /* Darkmode css */
 .body--dark {
-  --q-primary: white;
-  --q-secondary: white;
+  --q-primary: #25274d;
+  --q-secondary: #3b3d70;
   --q-accent: white;
 
   --q-positive: white;
@@ -45,5 +45,6 @@
   --menu-text: #fefefe;
   --menu-bg: #2e9cca;
   --menu-hover: #25274d;
+  --btn: #464866;
 }
 </style>

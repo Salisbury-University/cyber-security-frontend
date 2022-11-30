@@ -153,7 +153,6 @@ export const useChallengeStore = defineStore("challenge", {
         })
         .then((res) => {
           const info = res.data.exercises;
-
           this.challengeListSize = info.length;
 
           // array of axios calls to get individual exercise

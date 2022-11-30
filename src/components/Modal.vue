@@ -97,7 +97,7 @@ const exit = () => {
 }
 
 .login-txt {
-  color: #fefefe;
+  color: black;
   text-align: center;
   font-size: 45px;
 }

@@ -1,6 +1,9 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import http from "../http";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
@@ -50,6 +53,10 @@ export const useAuthStore = defineStore("auth", {
       return state.password;
     },
 
+    getDarkmode(state): boolean {
+      return state.persistence.darkmode;
+    },
+
     // /**
     //  * Gets loginAnimation value from state
     //  *
@@ -90,9 +97,17 @@ export const useAuthStore = defineStore("auth", {
     },
 
     login(): void {
-      this.persistence.loginStatus
-        ? (this.persistence.loginStatus = false)
-        : (this.persistence.loginStatus = true);
+      if (this.persistence.loginStatus) {
+        this.persistence.loginStatus = false;
+        this.persistence.token = "";
+        this.persistence.header.Authorization = "";
+      } else {
+        this.persistence.loginStatus = true;
+        this.loginModal = false;
+        this.setToken();
+        this.persistence.header.Authorization =
+          "bearer " + this.persistence.token;
+      }
       this.loginModal = false;
       this.username = "";
       this.password = "";
@@ -120,6 +135,40 @@ export const useAuthStore = defineStore("auth", {
       } else {
         this.setLoginStatus(false);
       }
+    },
+
+    /**
+     * Gets the darkmode from the database and set it to darkmode
+     */
+    getPreference(): void {
+      http()
+        .get("/api/v1/preference", {
+          headers: {
+            Authorization: this.persistence.header.Authorization,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          const data = res.data.preference;
+          this.persistence.darkmode = data;
+        });
+    },
+
+    /**
+     * Sets the darkmode to the backend
+     */
+    setPreference(): void {
+      http()
+        .post("/api/v1/preference", {
+          headers: {
+            Authorization: this.persistence.header.Authorization,
+          },
+          darkmode: this.persistence.darkmode,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log("updated");
+        });
     },
   },
 });

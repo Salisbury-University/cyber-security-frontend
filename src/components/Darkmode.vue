@@ -6,10 +6,13 @@ const useAuth = useAuthStore();
 
 const $q = useQuasar();
 
+// Initial darkmode on load
 $q.dark.set(useAuth.persistence.darkmode);
 
+// On click
 const setDarkMode = () => {
   $q.dark.set(useAuth.persistence.darkmode);
+  console.log(useAuth.persistence.header.Authorization);
 };
 </script>
 
@@ -21,5 +24,7 @@ const setDarkMode = () => {
     color="accent"
     v-model="useAuth.persistence.darkmode"
     @click="setDarkMode()"
+    @keyup.enter="setDarkMode()"
+    @keyup.space="setDarkMode()"
   />
 </template>
