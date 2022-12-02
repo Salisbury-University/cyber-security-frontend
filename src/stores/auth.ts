@@ -19,6 +19,7 @@ export const useAuthStore = defineStore("auth", {
       username: "",
       password: "",
       loginModal: false,
+      loginRef: null,
     };
   },
 
@@ -82,9 +83,10 @@ export const useAuthStore = defineStore("auth", {
     /**
      * Sets the token information
      */
-    setToken(): void {
-      this.persistence.token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
+    setToken(token: string): void {
+      this.persistence.token = token;
+      this.persistence.header.Authorization = "Bearer " + token;
+      // this.persistence.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
     },
 
     /**
@@ -96,21 +98,35 @@ export const useAuthStore = defineStore("auth", {
       );
     },
 
+    /**
+     * Logs the user in from the username and password
+     */
     login(): void {
-      if (this.persistence.loginStatus) {
-        this.persistence.loginStatus = false;
-        this.persistence.token = "";
-        this.persistence.header.Authorization = "";
-      } else {
-        this.persistence.loginStatus = true;
-        this.loginModal = false;
-        this.setToken();
-        this.persistence.header.Authorization =
-          "bearer " + this.persistence.token;
-      }
-      this.loginModal = false;
-      this.username = "";
-      this.password = "";
+      // this.setToken("as");
+      // this.persistence.loginStatus = true;
+      // this.loginModal = false;
+      http()
+        .post("/api/v1/auth/login", {
+          username: this.username,
+          password: this.password,
+        })
+        .then((res) => {
+          console.log(res);
+          this.setToken(res.data.token);
+          this.persistence.loginStatus = true;
+          this.loginModal = false;
+        })
+        .catch((e) => {
+          document.getElementById("login-fail")!.style.visibility = "visible";
+        });
+      return;
+    },
+
+    // Logout the user
+    logout(): void {
+      this.persistence.token = "";
+      this.persistence.header.Authorization = "";
+      this.setLoginStatus(false);
     },
 
     setLoginStatus(loginState: boolean): void {

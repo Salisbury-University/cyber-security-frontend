@@ -72,15 +72,21 @@ if (useAuth.getLoginStatus && useAuth.getToken != "") {
             @click="useAuth.showModal()"
             style=""
           >
-            <q-item-section avatar>
+            <!-- Logout -->
+            <q-item-section avatar @click="useAuth.logout()">
               <q-icon
-                v-if="useAuth.getLoginStatus"
+                v-if="useAuth.persistence.loginStatus"
                 class="menu-icon"
                 name="logout"
               ></q-icon>
               <q-icon v-else class="menu-icon" name="login"></q-icon>
             </q-item-section>
-            <q-item-section v-if="useAuth.getLoginStatus" class="menu-text">
+
+            <!-- Login -->
+            <q-item-section
+              v-if="useAuth.persistence.loginStatus"
+              class="menu-text"
+            >
               Logout
             </q-item-section>
             <q-item-section v-else class="menu-text"> Login </q-item-section>
@@ -174,12 +180,9 @@ if (useAuth.getLoginStatus && useAuth.getToken != "") {
   /* background-color: #2e9cca; */
 }
 
-.menu-text {
-  color: #fefefe;
-}
-
+.menu-text,
 .menu-icon {
-  color: #fefefe;
+  color: var(--menu-color);
 }
 
 .q-item-active:hover {

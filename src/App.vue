@@ -22,9 +22,8 @@
   --q-info: white;
   --q-warning: white;
 
-  --menu-icon: black;
-  --menu-text: black;
-  --menu-bg: gray;
+  --menu-color: black;
+  --menu-bg: #e5e5e5;
   --menu-hover: rgb(74, 73, 73);
 }
 
@@ -41,8 +40,7 @@
 
   --q-dark-page: #25274d;
 
-  --menu-icon: #fefefe;
-  --menu-text: #fefefe;
+  --menu-color: #fefefe;
   --menu-bg: #2e9cca;
   --menu-hover: #25274d;
   --btn: #464866;

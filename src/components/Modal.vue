@@ -116,4 +116,8 @@ const exit = () => {
 .bg-focusedInput {
   background-color: #25274d;
 }
+
+.login-fail {
+  visibility: hidden;
+}
 </style>
