@@ -13,9 +13,9 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 
 createApp(App)
-  .use(router)
   .use(createPinia())
   .use(Quasar, {
     plugins: {}, // import Quasar plugins and add here.
   })
+  .use(router)
   .mount("#app");
