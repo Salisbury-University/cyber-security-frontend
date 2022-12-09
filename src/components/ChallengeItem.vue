@@ -14,19 +14,19 @@ const props = defineProps({
 
 <template>
   <div id="container">
-    <h1>{{ challengeIndex }}</h1>
-
     <!-- Challenge image -->
-    <q-img width="150px" src="{{ useChallenge.image[challengeIndex - 1] }}" />
+    <q-img
+      id="img"
+      :src="useChallenge.image[challengeIndex - 1]"
+      loading="lazy"
+    />
 
     <!-- Challenge Information (name, difficulty, description) -->
     <span style="margin-left: 50px">
       <p id="challengeName">
-        <a
-          :href="'/challenges/' + useChallenge.name[challengeIndex - 1]"
-          onClick=""
-          >{{ useChallenge.name[challengeIndex - 1] }}</a
-        >
+        <a :href="'/challenges/' + useChallenge.name[challengeIndex - 1]">{{
+          useChallenge.name[challengeIndex - 1]
+        }}</a>
       </p>
       <p id="difficulty">
         Difficulty: {{ useChallenge.difficulty[challengeIndex - 1] }}
@@ -63,6 +63,8 @@ a:hover:after {
   color: #aaabb8;
   font-size: 18px;
   text-align: left;
+  width: 770px;
+  word-wrap: break-word;
 }
 
 #difficulty {
@@ -79,6 +81,7 @@ a:hover:after {
   margin-bottom: 40px;
   margin-top: 50px;
   font-weight: bold;
+  text-align: left;
 }
 
 #container {
@@ -86,5 +89,12 @@ a:hover:after {
   margin-left: 310px;
   margin-top: 40px;
   margin-bottom: -50px;
+}
+
+#img {
+  width: 200px;
+  margin-bottom: 45px;
+  border-radius: 8px;
+  top: 45px;
 }
 </style>

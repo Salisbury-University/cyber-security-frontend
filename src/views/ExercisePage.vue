@@ -1,15 +1,17 @@
 <script setup lang="ts">
+import { useRoute } from "vue-router";
 import { useChallengeStore } from "../stores/challenge";
 
 const useChallenge = useChallengeStore();
+const route = useRoute();
+const title = route.params.title;
 useChallenge.setChallenge();
-useChallenge.getChallenge("How to parse markdown");
+useChallenge.getChallenge(title);
 </script>
 
 <template>
   <!-- Challenge image -->
-  <!-- src="https://placeimg.com/500/300/nature" -->
-  <q-img fit:cover id="challengeImg" ratio="1">
+  <q-img fit:cover id="headerSection">
     <h1 id="challengeTitle">{{ useChallenge.name[0] }}</h1>
   </q-img>
 
@@ -30,14 +32,9 @@ useChallenge.getChallenge("How to parse markdown");
           </q-card-section>
           <q-card-section>
             Categories:
-            <!-- <div
-              v-for="index in useChallenge.categories[0].length"
-              :key="index"
-            > -->
             <span style="color: #2e9cca"
-              >{{ useChallenge.categories[0] }} &nbsp; &nbsp;</span
-            >
-            <!-- </div> -->
+              >{{ useChallenge.categories[0] }}
+            </span>
           </q-card-section>
 
           <q-card-section>
@@ -69,7 +66,7 @@ useChallenge.getChallenge("How to parse markdown");
 
 #infoBox {
   width: 1000px;
-  height: 680px;
+  height: 380px;
   margin-left: 250px;
   margin-right: 150px;
   margin-top: 20px;
@@ -77,7 +74,7 @@ useChallenge.getChallenge("How to parse markdown");
   border-radius: 10px;
 }
 
-#challengeImg {
+#headerSection {
   background-color: #29648a;
   margin-bottom: 20px;
   max-width: 8000px;
@@ -96,6 +93,8 @@ useChallenge.getChallenge("How to parse markdown");
   font-weight: bold;
   font-size: 13px;
   width: 145px;
-  left: 555px;
+  left: 765px;
+  top: 20px;
+  position: absolute;
 }
 </style>
