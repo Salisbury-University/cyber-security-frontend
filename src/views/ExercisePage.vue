@@ -16,19 +16,20 @@ useChallenge.getChallenge(title);
   </q-img>
 
   <div class="q-pa-md row items-start q-gutter-md">
-    <q-Card dark bordered id="infoBox">
+    <q-card dark bordered id="infoBox">
       <div>
         <!-- Description, Time limit, and Difficulty -->
         <div
           class="description"
-          style="margin-top: 25px; margin-left: 25px; font-weight: bold"
+          style="
+            margin-top: 25px;
+            margin-left: 25px;
+            font-weight: bold;
+            width: 950px;
+          "
         >
           <q-card-section>
             {{ useChallenge.description[0] }}
-            <span
-              ><q-btn id="vmBtn"
-                >Launch VM<q-icon name="settings" style="left: 6px" /></q-btn
-            ></span>
           </q-card-section>
           <q-card-section>
             Categories:
@@ -45,12 +46,16 @@ useChallenge.getChallenge(title);
           </q-card-section>
 
           <q-card-section>
+            <span
+              ><q-btn id="vmBtn"
+                >Launch VM<q-icon name="settings" style="left: 6px" /></q-btn
+            ></span>
             <!-- create v-if here for displaying start or continue btn -->
             <q-btn class="statusBtn">Start</q-btn>
           </q-card-section>
         </div>
       </div>
-    </q-Card>
+    </q-card>
   </div>
 </template>
 
@@ -93,7 +98,7 @@ useChallenge.getChallenge(title);
   font-weight: bold;
   font-size: 13px;
   width: 145px;
-  left: 765px;
+  left: 115px;
   top: 20px;
   position: absolute;
 }

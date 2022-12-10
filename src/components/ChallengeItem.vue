@@ -32,7 +32,7 @@ const props = defineProps({
         Difficulty: {{ useChallenge.difficulty[challengeIndex - 1] }}
       </p>
       <p class="description" style="margin-top: -40px">
-        {{ useChallenge.description[challengeIndex - 1] }}
+        {{ useChallenge.briefDescription[challengeIndex - 1] }}
       </p>
     </span>
   </div>

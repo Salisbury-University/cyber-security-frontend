@@ -10,6 +10,7 @@ export const useChallengeStore = defineStore("challenge", {
       timeLimit: [],
       difficulty: [],
       description: [],
+      briefDescription: [],
       image: [],
       categories: [],
       persistence: useStorage("challenge", {
@@ -161,6 +162,7 @@ export const useChallengeStore = defineStore("challenge", {
                 this.name[i] = metadata.title;
                 this.timeLimit[i] = metadata.timelimit;
                 this.description[i] = metadata.description;
+                this.briefDescription[i] = metadata.description.split(".")[0];
                 this.image[i] = metadata.image;
                 this.difficulty[i] = metadata.difficulty;
                 this.categories[i] = metadata.categories;
@@ -181,6 +183,7 @@ export const useChallengeStore = defineStore("challenge", {
           this.name[0] = metadata.title;
           this.timeLimit[0] = metadata.timelimit;
           this.description[0] = metadata.description;
+          this.briefDescription[0] = metadata.description.split(".")[0];
           this.image[0] = metadata.image;
           this.difficulty[0] = metadata.difficulty;
           this.categories[0] = metadata.categories;
