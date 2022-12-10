@@ -12,7 +12,6 @@ $q.dark.set(useAuth.persistence.darkmode);
 // On click
 const setDarkMode = () => {
   $q.dark.set(useAuth.persistence.darkmode);
-  console.log(useAuth.persistence.header.Authorization);
 };
 </script>
 

@@ -19,7 +19,6 @@ export const useAuthStore = defineStore("auth", {
       username: "",
       password: "",
       loginModal: false,
-      loginRef: null,
     };
   },
 
@@ -42,60 +41,72 @@ export const useAuthStore = defineStore("auth", {
       return state.persistence.token;
     },
 
+    /**
+     * Gets the authorization header including bearer
+     *
+     * @returns  {string} authorization header
+     */
+    getAuthHeader(state): string {
+      return state.persistence.header.Authorization;
+    },
+
+    /**
+     * Gets the modal state
+     *
+     * @returns {boolean} returns true of false to show up the login modal
+     */
     getModalState(state): boolean {
       return state.loginModal;
     },
 
+    /**
+     * Gets the username for login modal
+     *
+     * @returns {string} Returns the username that is stored
+     */
     getUsername(state): string {
       return state.username;
     },
 
+    /**
+     * Gets the password for login modal
+     *
+     * @returns {string} Returns the password that is stored
+     */
     getPassword(state): string {
       return state.password;
     },
 
+    /**
+     * Gets the current darkmode setting
+     *
+     * @returns {boolean} Returns current darkmode setting
+     */
     getDarkmode(state): boolean {
       return state.persistence.darkmode;
     },
-
-    // /**
-    //  * Gets loginAnimation value from state
-    //  *
-    //  * @param {any} state all state information
-    //  * @return {boolean} loginAnimation state
-    //  */
-    // getLoginAnimation(state): boolean {
-    //   return state.nonpersistence.loginAnimation;
-    // },
-
-    // /**
-    //  * Gets loggedIn value from store
-    //  *
-    //  * @param {any} state all state information
-    //  * @return {boolean} Token logged in
-    //  */
-    // getLoggedIn(state): boolean {
-    //   return state.persistence.loginState;
-    // },
   },
 
   actions: {
     /**
-     * Sets the token information
+     * Sets the token variable from the store
+     *
+     * @param {String} token  -   String that holds jwt token
      */
     setToken(token: string): void {
       this.persistence.token = token;
       this.persistence.header.Authorization = "Bearer " + token;
-      // this.persistence.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJjYXJhdXNhMSIsImlhdCI6MTY0ODQ4MTAyOX0.ec_l4NSOiQjh6Zr-NV55IBJAZzOyhf4uPz7CSrC6kxw";
     },
 
     /**
      * Sets the authorization header with token information
      */
-    setAuthorizationHeader(): void {
-      this.persistence.header.Authorization = "Bearer ".concat(
-        this.persistence.token
-      );
+    setAuthorizationHeader(empty: boolean = false): void {
+      empty
+        ? (this.persistence.header.Authorization = "")
+        : (this.persistence.header.Authorization = "Bearer ".concat(
+            this.persistence.token
+          ));
     },
 
     /**
@@ -113,38 +124,70 @@ export const useAuthStore = defineStore("auth", {
         .then((res) => {
           console.log(res);
           this.setToken(res.data.token);
-          this.persistence.loginStatus = true;
-          this.loginModal = false;
+          this.setAuthorizationHeader(true);
+          this.setLoginStatus(true);
+          this.setModalState(true);
         })
         .catch((e) => {
           document.getElementById("login-fail")!.style.visibility = "visible";
         });
-      return;
     },
 
     // Logout the user
     logout(): void {
-      this.persistence.token = "";
-      this.persistence.header.Authorization = "";
+      this.setToken("");
+      this.setAuthorizationHeader(true);
       this.setLoginStatus(false);
+      http()
+        .post("api/v1/auth/login")
+        .then((res) => {
+          console.log(res);
+          this.setToken("");
+          this.setLoginStatus(false);
+          this.setAuthorizationHeader(true);
+        });
     },
 
+    /**
+     * Sets the login state
+     *
+     * @param {boolean} loginState - login state
+     */
     setLoginStatus(loginState: boolean): void {
       this.persistence.loginStatus = loginState;
     },
 
+    /**
+     * Sets login modal state
+     *
+     * @param {boolean} modalState  - modal state
+     */
     setModalState(modalState: boolean): void {
       this.loginModal = modalState;
     },
 
+    /**
+     * Sets username for login modal
+     *
+     * @param {String} username  - username input
+     */
     setUsername(username: string): void {
       this.username = username;
     },
 
+    /**
+     * Sets password for login modal
+     *
+     * @param {String} password - password input
+     */
     setPassword(password: string): void {
       this.password = password;
     },
 
+    /**
+     * Function to toggle login modal
+     * (Used in both prefence page and Main.vue as emitter function)
+     */
     showModal(): void {
       if (!this.getLoginStatus) {
         this.setModalState(true);

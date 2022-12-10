@@ -3,7 +3,6 @@ import { ref } from "vue";
 import Modal from "../components/Modal.vue";
 import Card from "../components/Card.vue";
 import { useAuthStore } from "../stores/auth";
-import { setCssVar } from "quasar";
 import Darkmode from "../components/Darkmode.vue";
 import { useQuasar } from "quasar";
 
@@ -17,9 +16,7 @@ const bio = ref("Default bio\n CyberSecurity Team");
 
 // Sets the login modal to true or false
 const toggleModal = () => {
-  useAuth.getModalState
-    ? useAuth.setModalState(false)
-    : useAuth.setModalState(true);
+  useAuth.loginModal = !useAuth.loginModal;
 };
 
 // Gets the darkmode preference if logged in
@@ -69,7 +66,7 @@ if (useAuth.getLoginStatus && useAuth.getToken != "") {
             active
             clickable
             v-ripple
-            @click="useAuth.showModal()"
+            @click="toggleModal()"
             style=""
           >
             <!-- Logout -->
@@ -167,7 +164,7 @@ if (useAuth.getLoginStatus && useAuth.getToken != "") {
       </q-drawer>
       <router-view />
     </q-layout>
-    <Modal :loginModal="useAuth.getModalState" @event="toggleModal()" />
+    <Modal :loginModal="useAuth.loginModal" @event="toggleModal()" />
   </div>
 </template>
 

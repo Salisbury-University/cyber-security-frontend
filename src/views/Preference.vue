@@ -31,11 +31,11 @@ const useAuth = useAuthStore();
           <q-separator></q-separator>
 
           <div class="row">
-            <QCard class="stats">
-              <QCardSection> Placeholder </QCardSection>
+            <q-card class="stats">
+              <q-card-section> Placeholder </q-card-section>
               <q-separator></q-separator>
-              <QCardSection> </QCardSection>
-            </QCard>
+              <q-card-section> </q-card-section>
+            </q-card>
           </div>
         </div>
 
@@ -47,7 +47,7 @@ const useAuth = useAuthStore();
           <q-separator></q-separator>
 
           <div class="row">
-            <QCard class="col preference">
+            <q-card class="col preference">
               <div>
                 <span class="text-weight-bold">General</span>
                 <q-separator></q-separator>
@@ -57,7 +57,7 @@ const useAuth = useAuthStore();
                   >Apply</q-btn
                 >
               </div>
-            </QCard>
+            </q-card>
           </div>
         </div>
       </div>

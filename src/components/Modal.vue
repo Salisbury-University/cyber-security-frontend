@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useAuthStore } from "../stores/auth";
+import LoginHelp from "./LoginHelp.vue";
 
 const useAuth = useAuthStore();
 
@@ -10,10 +11,17 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["event"]);
+
 const exit = () => {
-  useAuth.setModalState(false);
   useAuth.setUsername("");
   useAuth.setPassword("");
+};
+
+const passwordForgot = ref(false);
+
+const changeHelpToggle = () => {
+  passwordForgot.value = !passwordForgot.value;
 };
 </script>
 
@@ -24,11 +32,9 @@ const exit = () => {
       persistent
       transition-show="scale"
       transition-hide="scale"
+      class="login-dialog"
     >
-      <q-card
-        class="login-bg"
-        style="width: 400px; height: 500px; overflow: hidden"
-      >
+      <q-card class="login-bg">
         <q-card-section>
           <q-btn
             class="close-icon"
@@ -37,7 +43,12 @@ const exit = () => {
             flat
             round
             dense
-            @click="exit()"
+            @click="
+              () => {
+                exit();
+                emit('event');
+              }
+            "
           />
         </q-card-section>
         <q-card-section>
@@ -79,6 +90,12 @@ const exit = () => {
               </q-btn>
             </div>
           </q-form>
+          <div class="forgot-password">
+            <div @click="changeHelpToggle()">
+              Forgot password?
+              <q-icon name="help"> </q-icon>
+            </div>
+          </div>
         </q-card-section>
 
         <q-card-section>
@@ -89,35 +106,75 @@ const exit = () => {
       </q-card>
     </q-dialog>
   </div>
+  <LoginHelp
+    message-title="Help"
+    :message-modal="passwordForgot"
+    message="Please contact your system administrator for furthur help"
+    @event="changeHelpToggle()"
+  ></LoginHelp>
 </template>
 
 <style>
 .login-bg {
-  background-color: #2e9cca;
+  background-image: linear-gradient(
+    to bottom right,
+    var(--menu-bg),
+    var(--menu-bg-secondary)
+  );
+  border-radius: 40px !important;
+  width: 400px;
+  height: 500px;
+  overflow: hidden;
 }
 
 .login-txt {
-  color: black;
+  color: var(--q-accent);
   text-align: center;
   font-size: 45px;
 }
 
 .btn-bg {
-  background-color: #aaabb8;
+  width: 90%;
+  background-color: var(--q-secondary);
   padding: 25px 30px 50px 30px;
 }
 
 .input {
-  margin: 2px 25px 50px 25px;
-  background-color: #fefefe;
+  width: 90%;
+  margin: 0 auto 20px auto;
+  background-color: var(--input-bg);
   border-radius: 28px;
+  color: var(--q-accent);
 }
 
 .bg-focusedInput {
-  background-color: #25274d;
+  background-color: var(--q-primary) !important;
+  color: var(--q-accent);
 }
 
 .login-fail {
   visibility: hidden;
+  width: 100%;
+  text-align: center;
+  color: var(--q-negative);
+}
+
+.login-dialog {
+  backdrop-filter: blur(5px);
+}
+
+.forgot-password {
+  width: 100%;
+  margin-top: 5px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.password-help {
+  position: relative;
+  float: right;
+  background: red;
+  width: 50%;
 }
 </style>

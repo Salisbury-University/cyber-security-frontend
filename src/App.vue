@@ -17,8 +17,8 @@
   --q-secondary: rgb(216, 216, 216);
   --q-accent: black;
 
-  --q-positive: white;
-  --q-negative: white;
+  --q-positive: green;
+  --q-negative: red;
   --q-info: white;
   --q-warning: white;
 
@@ -33,15 +33,22 @@
   --q-secondary: #3b3d70;
   --q-accent: white;
 
-  --q-positive: white;
-  --q-negative: white;
+  --q-positive: green;
+  --q-negative: red;
   --q-info: white;
   --q-warning: white;
 
-  --q-dark-page: #25274d;
+  --q-dark-page: #181a32;
+
+  /* 
+  Input
+   */
+  --input-bg: #fefefe;
+  --input-focus-bg: rgb(216, 216, 216);
 
   --menu-color: #fefefe;
   --menu-bg: #2e9cca;
+  --menu-bg-secondary: #125a79;
   --menu-hover: #25274d;
   --btn: #464866;
 }

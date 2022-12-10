@@ -141,9 +141,6 @@ export const useChallengeStore = defineStore("challenge", {
      * Grabs info for challenge
      */
     setChallenge(): void {
-      useAuthStore().setToken();
-      useAuthStore().setAuthorizationHeader();
-
       // axios call
       http()
         .get("/api/v1/exercises", {
