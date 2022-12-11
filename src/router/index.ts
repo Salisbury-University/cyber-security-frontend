@@ -5,6 +5,7 @@ import Index from "../views/Index.vue";
 import Challenges from "../views/Challenges.vue";
 import Preference from "../views/Preference.vue";
 import Wiki from "../views/Wiki.vue";
+import Individual from "../views/Individual.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,6 +21,10 @@ const routes: Array<RouteRecordRaw> = [
         // Challenges page
         path: "/challenges",
         component: Challenges,
+      },
+      {
+        path: "/challenges/:id",
+        component: Individual,
       },
       {
         // Preference page

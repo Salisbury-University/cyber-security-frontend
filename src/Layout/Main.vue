@@ -5,6 +5,7 @@ import Card from "../components/Card.vue";
 import { useAuthStore } from "../stores/auth";
 import Darkmode from "../components/Darkmode.vue";
 import { useQuasar } from "quasar";
+import { onMounted } from "vue";
 
 const useAuth = useAuthStore();
 const $q = useQuasar();
@@ -24,6 +25,9 @@ if (useAuth.getLoginStatus && useAuth.getToken != "") {
   useAuth.getPreference();
   $q.dark.set(useAuth.getDarkmode);
 }
+onMounted(() => {
+  $q.dark.set(useAuth.getDarkmode);
+});
 </script>
 
 <template>
@@ -60,33 +64,37 @@ if (useAuth.getLoginStatus && useAuth.getToken != "") {
             </q-item-section>
           </q-item>
 
-          <!-- Login and logout buttons -->
+          <!-- Login buttons -->
           <q-item
+            v-if="!useAuth.persistence.loginStatus"
             class="q-item-active"
             active
             clickable
             v-ripple
             @click="toggleModal()"
-            style=""
           >
             <!-- Logout -->
-            <q-item-section avatar @click="useAuth.logout()">
-              <q-icon
-                v-if="useAuth.persistence.loginStatus"
-                class="menu-icon"
-                name="logout"
-              ></q-icon>
-              <q-icon v-else class="menu-icon" name="login"></q-icon>
+            <q-item-section avatar>
+              <q-icon class="menu-icon" name="login"></q-icon>
             </q-item-section>
 
-            <!-- Login -->
-            <q-item-section
-              v-if="useAuth.persistence.loginStatus"
-              class="menu-text"
-            >
-              Logout
+            <q-item-section class="menu-text"> Login </q-item-section>
+          </q-item>
+
+          <!-- logout buttons -->
+          <q-item
+            v-else
+            class="q-item-active"
+            active
+            clickable
+            v-ripple
+            @click="useAuth.logout()"
+          >
+            <q-item-section avatar>
+              <q-icon class="menu-icon" name="logout"></q-icon>
             </q-item-section>
-            <q-item-section v-else class="menu-text"> Login </q-item-section>
+
+            <q-item-section class="menu-text"> Logout </q-item-section>
           </q-item>
 
           <!-- Menu seperator -->
@@ -172,6 +180,7 @@ if (useAuth.getLoginStatus && useAuth.getToken != "") {
 .q-toggle__label {
   color: var(--q-accent);
 }
+
 .menu-bg {
   background-color: var(--menu-bg);
   /* background-color: #2e9cca; */

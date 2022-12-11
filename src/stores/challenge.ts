@@ -171,5 +171,21 @@ export const useChallengeStore = defineStore("challenge", {
           }
         });
     },
+
+    startVM(title: string): void {
+      http()
+        .post(
+          "/api/v1/exercise/".concat(title, "/start"),
+          {},
+          {
+            headers: {
+              Authorization: useAuthStore().persistence.header.Authorization,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
 });

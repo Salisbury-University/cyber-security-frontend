@@ -124,9 +124,11 @@ export const useAuthStore = defineStore("auth", {
         .then((res) => {
           console.log(res);
           this.setToken(res.data.token);
-          this.setAuthorizationHeader(true);
+          this.setAuthorizationHeader(false);
           this.setLoginStatus(true);
-          this.setModalState(true);
+          this.setModalState(false);
+          this.setUsername("");
+          this.setPassword("");
         })
         .catch((e) => {
           document.getElementById("login-fail")!.style.visibility = "visible";
@@ -139,7 +141,7 @@ export const useAuthStore = defineStore("auth", {
       this.setAuthorizationHeader(true);
       this.setLoginStatus(false);
       http()
-        .post("api/v1/auth/login")
+        .post("api/v1/auth/logout")
         .then((res) => {
           console.log(res);
           this.setToken("");
@@ -192,7 +194,7 @@ export const useAuthStore = defineStore("auth", {
       if (!this.getLoginStatus) {
         this.setModalState(true);
       } else {
-        this.setLoginStatus(false);
+        this.setModalState(false);
       }
     },
 
@@ -209,7 +211,7 @@ export const useAuthStore = defineStore("auth", {
         .then((res) => {
           console.log(res);
           const data = res.data.preference;
-          this.persistence.darkmode = data;
+          this.persistence.darkmode = data.darkmode;
         });
     },
 
@@ -218,12 +220,19 @@ export const useAuthStore = defineStore("auth", {
      */
     setPreference(): void {
       http()
-        .post("/api/v1/preference", {
-          headers: {
-            Authorization: this.persistence.header.Authorization,
+        .post(
+          "/api/v1/preference",
+          {
+            preference: {
+              darkmode: this.persistence.darkmode,
+            },
           },
-          darkmode: this.persistence.darkmode,
-        })
+          {
+            headers: {
+              Authorization: this.persistence.header.Authorization,
+            },
+          }
+        )
         .then((res) => {
           console.log(res);
           console.log("updated");
