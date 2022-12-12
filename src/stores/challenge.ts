@@ -6,20 +6,20 @@ import http from "../http";
 export const useChallengeStore = defineStore("challenge", {
   state: () => {
     return {
-      name: [],
-      timeLimit: [],
-      difficulty: [],
-      description: [],
-      briefDescription: [],
-      image: [],
-      categories: [],
       persistence: useStorage("challenge", {
+        name: [],
+        timeLimit: [],
+        difficulty: [],
+        description: [],
+        briefDescription: [],
+        image: [],
+        categories: [],
         header: {
           Authorization: "",
         },
+        status: [],
+        challengeListSize: 0,
       }),
-      status: [],
-      challengeListSize: 0,
     };
   },
 
@@ -31,7 +31,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @return {string} name state
      */
     getChallengeName(state: any): string {
-      return state.name;
+      return state.persistence.name;
     },
 
     /**
@@ -41,7 +41,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {string} timeLimit state
      */
     getTimeLimit(state: any): string {
-      return state.timeLimit;
+      return state.persistence.timeLimit;
     },
 
     /**
@@ -51,7 +51,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {number} difficulty state
      */
     getDifficulty(state: any): number {
-      return state.difficulty;
+      return state.persistence.difficulty;
     },
 
     /**
@@ -61,7 +61,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {string} description state
      */
     getDescription(state: any): string {
-      return state.description;
+      return state.persistence.description;
     },
 
     /**
@@ -71,7 +71,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {string} image state
      */
     getImage(state: any): string {
-      return state.image;
+      return state.persistence.image;
     },
 
     /**
@@ -80,7 +80,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @returns {number} challenge list size
      */
     getListSize(state: any): number {
-      return state.challengeListSize;
+      return state.persistence.challengeListSize;
     },
   },
 
@@ -91,7 +91,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} name name of challenge
      */
     setChallengeName(name: string): void {
-      this.name = name;
+      this.persistence.name = name;
     },
 
     /**
@@ -100,7 +100,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} limit time limit for challenge
      */
     setTimeLimit(limit: string): void {
-      this.timeLimit = limit;
+      this.persistence.timeLimit = limit;
     },
 
     /**
@@ -109,7 +109,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {number} level difficulty for challenge
      */
     setDifficulty(level: number): void {
-      this.difficulty = level;
+      this.persistence.difficulty = level;
     },
 
     /**
@@ -118,7 +118,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} descr description of challenge
      */
     setDescription(descr: string): void {
-      this.description = descr;
+      this.persistence.description = descr;
     },
 
     /**
@@ -127,7 +127,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {string} imgUrl url to challenge image
      */
     setImage(imgUrl: string): void {
-      this.image = imgUrl;
+      this.persistence.image = imgUrl;
     },
 
     /**
@@ -135,7 +135,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param newListSize list size
      */
     setListSize(newListSize: number): void {
-      this.challengeListSize = newListSize;
+      this.persistence.challengeListSize = newListSize;
     },
 
     /**
@@ -143,7 +143,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param completionStatus status
      */
     setStatus(completionStatus: string): void {
-      this.status = completionStatus;
+      this.persistence.status = completionStatus;
     },
 
     /**
@@ -156,7 +156,7 @@ export const useChallengeStore = defineStore("challenge", {
         .then((res) => {
           const info = res.data.exercises;
 
-          this.challengeListSize = info.length;
+          this.persistence.challengeListSize = info.length;
 
           // array of axios calls to get individual exercise
           for (let i = 0; i < info.length; i++) {
@@ -167,14 +167,15 @@ export const useChallengeStore = defineStore("challenge", {
                 const metadata = response.data.metadata;
 
                 // store individual exercise info in name arr, timeLmit arr, etc.
-                this.name[i] = metadata.title;
-                this.timeLimit[i] = metadata.timelimit;
-                this.description[i] = metadata.description;
-                this.briefDescription[i] = metadata.description.split(".")[0];
-                this.image[i] = metadata.image;
-                this.difficulty[i] = metadata.difficulty;
-                this.categories[i] = metadata.categories;
-                this.status[i] = status.status;
+                this.persistence.name[i] = metadata.title;
+                this.persistence.timeLimit[i] = metadata.timelimit;
+                this.persistence.description[i] = metadata.description;
+                this.persistence.briefDescription[i] =
+                  metadata.description.split(".")[0];
+                this.persistence.image[i] = metadata.image;
+                this.persistence.difficulty[i] = metadata.difficulty;
+                this.persistence.categories[i] = metadata.categories;
+                this.persistence.status[i] = status.status;
               });
           }
         });
@@ -188,14 +189,15 @@ export const useChallengeStore = defineStore("challenge", {
           const metadata = response.data.metadata;
 
           // store individual exercise info in name arr, timeLmit arr, etc.
-          this.name[0] = metadata.title;
-          this.timeLimit[0] = metadata.timelimit;
-          this.description[0] = metadata.description;
-          this.briefDescription[0] = metadata.description.split(".")[0];
-          this.image[0] = metadata.image;
-          this.difficulty[0] = metadata.difficulty;
-          this.categories[0] = metadata.categories;
-          this.status[0] = status.status;
+          this.persistence.name[0] = metadata.title;
+          this.persistence.timeLimit[0] = metadata.timelimit;
+          this.persistence.description[0] = metadata.description;
+          this.persistence.briefDescription[0] =
+            metadata.description.split(".")[0];
+          this.persistence.image[0] = metadata.image;
+          this.persistence.difficulty[0] = metadata.difficulty;
+          this.persistence.categories[0] = metadata.categories;
+          this.persistence.status[0] = status.status;
         });
     },
   },

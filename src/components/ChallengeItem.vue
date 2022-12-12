@@ -17,22 +17,26 @@ const props = defineProps({
     <!-- Challenge image -->
     <q-img
       id="img"
-      :src="useChallenge.image[challengeIndex - 1]"
+      :src="useChallenge.persistence.image[challengeIndex - 1]"
       loading="lazy"
     />
 
     <!-- Challenge Information (name, difficulty, description) -->
     <span style="margin-left: 50px">
       <p id="challengeName">
-        <a :href="'/challenges/' + useChallenge.name[challengeIndex - 1]">{{
-          useChallenge.name[challengeIndex - 1]
-        }}</a>
+        <a
+          :href="
+            '/challenges/' + useChallenge.persistence.name[challengeIndex - 1]
+          "
+          >{{ useChallenge.persistence.name[challengeIndex - 1] }}</a
+        >
       </p>
       <p id="difficulty">
-        Difficulty: {{ useChallenge.difficulty[challengeIndex - 1] }}
+        Difficulty:
+        {{ useChallenge.persistence.difficulty[challengeIndex - 1] }}
       </p>
       <p class="description" style="margin-top: -40px">
-        {{ useChallenge.briefDescription[challengeIndex - 1] }}
+        {{ useChallenge.persistence.briefDescription[challengeIndex - 1] }}
       </p>
     </span>
   </div>
