@@ -2,17 +2,32 @@
 import { ref } from "vue";
 import Modal from "../components/Modal.vue";
 import Card from "../components/Card.vue";
+import { useAuthStore } from "../stores/auth";
+import Darkmode from "../components/Darkmode.vue";
+import { useQuasar } from "quasar";
+import { onMounted } from "vue";
+
+const useAuth = useAuthStore();
+const $q = useQuasar();
 
 const drawer = ref(false);
 const miniState = ref(true);
-const showLogin = ref(false);
 
-/**
- * Shows and hides login modal
- */
-function toggleLogin() {
-  showLogin.value = !showLogin.value;
+const bio = ref("Default bio\n CyberSecurity Team");
+
+// Sets the login modal to true or false
+const toggleModal = () => {
+  useAuth.loginModal = !useAuth.loginModal;
+};
+
+// Gets the darkmode preference if logged in
+if (useAuth.getLoginStatus && useAuth.getToken != "") {
+  useAuth.getPreference();
+  $q.dark.set(useAuth.getDarkmode);
 }
+onMounted(() => {
+  $q.dark.set(useAuth.getDarkmode);
+});
 </script>
 
 <template>
@@ -25,13 +40,69 @@ function toggleLogin() {
         @mouseover="miniState = false"
         @mouseout="miniState = true"
         mini-to-overlay
-        :width="200"
-        :breakpoint="400"
+        :mini-width="56"
+        :width="250"
+        :breakpoint="500"
         class="menu-bg"
       >
-        <q-list padding>
+        <q-list>
+          <!-- User avatar -->
+          <q-item style="height: 30vh">
+            <!-- Empty place holder -->
+            <q-item-section avatar> </q-item-section>
+            <q-item-section class="menu-icon">
+              <q-avatar circle style="width: 100%; height: 100%">
+                <q-img
+                  v-if="useAuth.getLoginStatus"
+                  src="https://cdn.quasar.dev/logo-v2/svg/logo.svg"
+                />
+                <q-img
+                  v-else
+                  src="https://freesvg.org/img/abstract-user-flat-4.png"
+                ></q-img>
+              </q-avatar>
+            </q-item-section>
+          </q-item>
+
+          <!-- Login buttons -->
           <q-item
-            class="q-item"
+            v-if="!useAuth.persistence.loginStatus"
+            class="q-item-active"
+            active
+            clickable
+            v-ripple
+            @click="toggleModal()"
+          >
+            <!-- Logout -->
+            <q-item-section avatar>
+              <q-icon class="menu-icon" name="login"></q-icon>
+            </q-item-section>
+
+            <q-item-section class="menu-text"> Login </q-item-section>
+          </q-item>
+
+          <!-- logout buttons -->
+          <q-item
+            v-else
+            class="q-item-active"
+            active
+            clickable
+            v-ripple
+            @click="useAuth.logout()"
+          >
+            <q-item-section avatar>
+              <q-icon class="menu-icon" name="logout"></q-icon>
+            </q-item-section>
+
+            <q-item-section class="menu-text"> Logout </q-item-section>
+          </q-item>
+
+          <!-- Menu seperator -->
+          <q-separator inset />
+
+          <!-- Landing page -->
+          <q-item
+            class="q-item-active"
             active
             clickable
             v-ripple
@@ -44,8 +115,9 @@ function toggleLogin() {
             <q-item-section class="menu-text"> Home </q-item-section>
           </q-item>
 
+          <!-- Challenges page -->
           <q-item
-            class="q-item"
+            class="q-item-active"
             active
             clickable
             v-ripple
@@ -58,48 +130,77 @@ function toggleLogin() {
             <q-item-section class="menu-text"> Challenges </q-item-section>
           </q-item>
 
-          <q-item class="q-item" active clickable v-ripple>
+          <q-item class="q-item-active" active clickable v-ripple to="/wiki">
             <q-item-section avatar>
               <q-icon class="menu-icon" name="feed"></q-icon>
             </q-item-section>
             <q-item-section class="menu-text"> Wiki </q-item-section>
           </q-item>
 
+          <!-- User preference / accounts -->
           <q-item
-            class="q-item"
+            class="q-item-active"
             active
             clickable
+            to="/preference"
             v-ripple
-            @click="showLogin = !showLogin"
           >
             <q-item-section avatar>
               <q-icon class="menu-icon" name="person"></q-icon>
             </q-item-section>
             <q-item-section class="menu-text"> Account </q-item-section>
           </q-item>
+
+          <!-- Menu seperator -->
+          <q-separator inset />
+
+          <!-- Dark mode toggle -->
+          <q-item style="height: 10px" @click="">
+            <q-item-section avatar>
+              <q-icon
+                v-if="!useAuth.persistence.darkmode"
+                class="menu-icon"
+                name="light_mode"
+              ></q-icon>
+              <q-icon v-else class="menu-icon" name="dark_mode"></q-icon>
+            </q-item-section>
+            <q-item-section>
+              <Darkmode></Darkmode>
+            </q-item-section>
+          </q-item>
         </q-list>
       </q-drawer>
-
-      <Modal :loginModal="showLogin" @event="toggleLogin()" />
       <router-view />
     </q-layout>
+    <Modal :loginModal="useAuth.loginModal" @event="toggleModal()" />
   </div>
 </template>
 
 <style>
+.q-toggle__label {
+  color: var(--q-accent);
+}
+
 .menu-bg {
-  background-color: #2e9cca;
+  background-color: var(--menu-bg);
+  /* background-color: #2e9cca; */
 }
 
-.menu-text {
-  color: #fefefe;
-}
-
+.menu-text,
 .menu-icon {
-  color: #fefefe;
+  color: var(--menu-color);
 }
 
-.q-item:hover {
-  background-color: #25274d;
+.q-item-active:hover {
+  background-color: var(--menu-hover);
+  /* background-color: #25274d; */
+}
+
+.q-item__section {
+  color: var(--q-accent);
+}
+
+.q-icon {
+  color: var(--q-accent);
 }
 </style>

@@ -11,7 +11,45 @@
   color: #2c3e50;
 }
 
-body {
-  background-color: #25274d;
+/* Lightmode css */
+.body--light {
+  --q-primary: white;
+  --q-secondary: rgb(216, 216, 216);
+  --q-accent: black;
+
+  --q-positive: green;
+  --q-negative: red;
+  --q-info: white;
+  --q-warning: white;
+
+  --menu-color: black;
+  --menu-bg: #e5e5e5;
+  --menu-hover: rgb(74, 73, 73);
+}
+
+/* Darkmode css */
+.body--dark {
+  --q-primary: #25274d;
+  --q-secondary: #3b3d70;
+  --q-accent: white;
+
+  --q-positive: green;
+  --q-negative: red;
+  --q-info: white;
+  --q-warning: white;
+
+  --q-dark-page: #181a32;
+
+  /* 
+  Input
+   */
+  --input-bg: #fefefe;
+  --input-focus-bg: rgb(216, 216, 216);
+
+  --menu-color: #fefefe;
+  --menu-bg: #2e9cca;
+  --menu-bg-secondary: #125a79;
+  --menu-hover: #25274d;
+  --btn: #464866;
 }
 </style>

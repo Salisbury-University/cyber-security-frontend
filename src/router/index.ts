@@ -3,7 +3,11 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import MainLayout from "../Layout/Main.vue";
 import Index from "../views/Index.vue";
 import Challenges from "../views/Challenges.vue";
+import Preference from "../views/Preference.vue";
+import Wiki from "../views/Wiki.vue";
 import ExercisePage from "../views/ExercisePage.vue";
+import { useAuthStore } from "../stores/auth";
+import { useChallengeStore } from "../stores/challenge";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,6 +29,16 @@ const routes: Array<RouteRecordRaw> = [
         path: "/challenges/:title",
         component: ExercisePage,
       },
+      {
+        // Preference page
+        path: "/preference",
+        component: Preference,
+      },
+      {
+        //Wiki page
+        path: "/wiki",
+        component: Wiki,
+      },
     ],
   },
 ];
@@ -34,4 +48,8 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to) => {
+  const useAuth = useAuthStore();
+  const useChallenge = useChallengeStore();
+});
 export default router;

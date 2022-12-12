@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
+import { onBeforeMount } from "vue";
 
 const useChallenge = useChallengeStore();
 useChallenge.setChallenge();
