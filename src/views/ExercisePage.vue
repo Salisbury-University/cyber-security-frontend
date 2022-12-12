@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import { useAuthStore } from "../stores/auth";
 import { useChallengeStore } from "../stores/challenge";
 
 const useChallenge = useChallengeStore();
+const useAuth = useAuthStore();
 const route = useRoute();
 const title = route.params.title;
 useChallenge.getChallenge(title);
@@ -72,8 +74,10 @@ function toggleCompletion(completionStatus: boolean) {
                 >{{ isComplete ? "Complete" : "Mark as Complete" }}</q-btn
               ></span
             >
-            <!-- create v-if here for displaying start or continue btn -->
-            <q-btn class="statusBtn">Start</q-btn>
+            <!-- Enable/Disable start btn based on login status -->
+            <q-btn class="statusBtn" :disable="!useAuth.persistence.loginStatus"
+              >Start</q-btn
+            >
           </q-card-section>
         </div>
       </div>
