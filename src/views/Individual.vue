@@ -5,8 +5,11 @@ import { useAuthStore } from "../stores/auth";
 
 const useChallenge = useChallengeStore();
 const useAuth = useAuthStore();
-
 const route = useRoute();
+
+if (useAuth.getLoginStatus) {
+  useChallenge.getStatus(route.params.id);
+}
 </script>
 
 <template>

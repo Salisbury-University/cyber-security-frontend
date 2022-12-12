@@ -6,6 +6,8 @@ import Challenges from "../views/Challenges.vue";
 import Preference from "../views/Preference.vue";
 import Wiki from "../views/Wiki.vue";
 import Individual from "../views/Individual.vue";
+import { useAuthStore } from "../stores/auth";
+import { useChallengeStore } from "../stores/challenge";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -45,4 +47,8 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to) => {
+  const useAuth = useAuthStore();
+  const useChallenge = useChallengeStore();
+});
 export default router;

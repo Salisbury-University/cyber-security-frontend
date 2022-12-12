@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useChallengeStore } from "../stores/challenge";
-import { ref } from "vue";
+import { onBeforeMount } from "vue";
 
 const useChallenge = useChallengeStore();
 useChallenge.setChallenge();
@@ -11,10 +11,6 @@ const props = defineProps({
     type: Number,
   },
 });
-
-useChallenge.name[0];
-console.log(useChallenge.name[props.challengeIndex - 1]);
-const href = ref("/challenges/" + useChallenge.name[props.challengeIndex - 1]);
 </script>
 
 <template>
@@ -27,7 +23,9 @@ const href = ref("/challenges/" + useChallenge.name[props.challengeIndex - 1]);
     <!-- Challenge Information (name, difficulty, description) -->
     <span style="margin-left: 50px">
       <p id="challengeName">
-        <a :href="href">{{ useChallenge.name[challengeIndex - 1] }}</a>
+        <a :href="'/challenges/' + useChallenge.name[challengeIndex - 1]">{{
+          useChallenge.name[challengeIndex - 1]
+        }}</a>
       </p>
       <p id="difficulty">
         Difficulty: {{ useChallenge.difficulty[challengeIndex - 1] }}

@@ -16,6 +16,7 @@ export const useChallengeStore = defineStore("challenge", {
         header: {
           Authorization: "",
         },
+        weekly: {},
       }),
       status: [],
       challengeListSize: 0,
@@ -29,7 +30,7 @@ export const useChallengeStore = defineStore("challenge", {
      * @param {any} state all state information
      * @return {string} name state
      */
-    getChallengeName(state: any): string {
+    getChallengeName(state: any): Array<string> {
       return state.name;
     },
 
@@ -185,6 +186,89 @@ export const useChallengeStore = defineStore("challenge", {
         )
         .then((res) => {
           console.log(res);
+        });
+    },
+
+    getStatus(title: string): void {
+      http()
+        .get("/api/v1/exercise/".concat(title, "/status"), {
+          headers: {
+            Authorization: useAuthStore().persistence.header.Authorization,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    },
+
+    getWeekly(): void {
+      http()
+        .get("/api/v1/exercise/status/weekly")
+        .then((res) => {
+          const data = res.data;
+          if (data.lenght == 0) {
+            return;
+          }
+
+          let user = [];
+          let exerciseTitle = [];
+          let status = [];
+          let timeStart = [];
+          let category = [];
+          let difficulty = [];
+          let timelimit = [];
+          let vm = [];
+
+          // Sort the weekly
+          for (let i = 0; i < data.length; i++) {
+            user.push(data[i].user);
+            exerciseTitle.push(data[i].exerciseTitle);
+            status.push(data[i].status);
+            timeStart.push(data[i].timeStart);
+            for (let j = 0; j < data[i].category.length; j++) {
+              category.push(data[i].category[j]);
+            }
+            difficulty.push(data[i].difficulty);
+            timelimit.push(data[i].timelimit);
+            vm.push(data[i].vm);
+          }
+
+          function frequent(arr: Array<any>): {
+            name: string | number;
+            number: number;
+          } {
+            const frequent = { name: "", number: 0 };
+            for (let i = 0; i < arr.length; i++) {
+              const currName = arr[i];
+              let currCounter = 1;
+              for (let j = i + 1; j < arr.length; j++) {
+                if (arr[i] === arr[j]) {
+                  currCounter++;
+                }
+              }
+              if (currCounter > frequent.number) {
+                frequent.name = currName;
+                frequent.number = currCounter;
+              }
+            }
+            return frequent;
+          }
+          const mostUser = frequent(user);
+          const mostExercise = frequent(exerciseTitle);
+          const mostCategories = frequent(category);
+          const mostDifficulty = frequent(difficulty);
+          const mostVM = frequent(vm);
+
+          this.persistence.weekly = {
+            user: mostUser,
+            exerciseTitle: mostExercise,
+            status: status,
+            timeStart: timeStart,
+            category: mostCategories,
+            difficulty: mostDifficulty,
+            timelimit: timelimit,
+            vm: mostVM,
+          };
         });
     },
   },
