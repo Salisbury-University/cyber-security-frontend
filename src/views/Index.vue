@@ -29,7 +29,7 @@ const weekly = useChallenge.persistence.weekly;
         <span class="time">{{ time }}</span>
       </div>
 
-      <div id="most-stats">
+      <div id="most-stats" v-if="useChallenge.persistence.weekly.length > 0">
         <LandingCard
           title="Most Valuable User"
           :message="'' + useChallenge.persistence.weekly.user.name"

@@ -23,7 +23,7 @@ function toggleCompletion(completionStatus: boolean) {
 <template>
   <!-- Challenge image -->
   <q-img fit:cover id="headerSection">
-    <h1 id="challengeTitle">{{ useChallenge.name[0] }}</h1>
+    <h1 id="challengeTitle">{{ useChallenge.persistence.name[0] }}</h1>
   </q-img>
 
   <div class="q-pa-md row items-start q-gutter-md">
@@ -40,12 +40,12 @@ function toggleCompletion(completionStatus: boolean) {
           "
         >
           <q-card-section>
-            {{ useChallenge.description[0] }}
+            {{ useChallenge.persistence.description[0] }}
           </q-card-section>
           <q-card-section>
             Categories:
             <span style="color: #2e9cca"
-              >{{ useChallenge.categories[0] }}
+              >{{ useChallenge.persistence.categories[0] }}
             </span>
           </q-card-section>
 
@@ -53,13 +53,13 @@ function toggleCompletion(completionStatus: boolean) {
             <span
               >Time Limit:
               <span style="color: black">{{
-                useChallenge.timeLimit[0]
+                useChallenge.persistence.timeLimit[0]
               }}</span></span
             >
             <span style="margin-left: 15px"
               >Difficulty:
               <span style="color: black">{{
-                useChallenge.difficulty[0]
+                useChallenge.persistence.difficulty[0]
               }}</span></span
             >
           </q-card-section>
