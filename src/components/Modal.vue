@@ -17,8 +17,8 @@ const exit = () => {
   useAuth.setUsername("");
   useAuth.setPassword("");
 };
-
 let modal = props.loginModal;
+console.log(modal);
 watch(()=> props.loginModal, ()=>{
   modal = props.loginModal;
 })
