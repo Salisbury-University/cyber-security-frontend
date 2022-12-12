@@ -19,6 +19,7 @@ export const useAuthStore = defineStore("auth", {
       username: "",
       password: "",
       loginModal: false,
+      helpModal: false,
     };
   },
 

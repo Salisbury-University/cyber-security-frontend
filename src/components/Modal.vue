@@ -91,7 +91,7 @@ const changeHelpToggle = () => {
             </div>
           </q-form>
           <div class="forgot-password">
-            <div @click="changeHelpToggle()">
+            <div @click="useAuth.helpModal = !useAuth.helpModal">
               Forgot password?
               <q-icon name="help"> </q-icon>
             </div>
@@ -108,10 +108,8 @@ const changeHelpToggle = () => {
   </div>
   <LoginHelp
     message-title="Help"
-    :message-modal="passwordForgot"
     message="Please contact your system administrator for furthur help"
     @event="changeHelpToggle()"
-    @click="changeHelpToggle()"
   ></LoginHelp>
 </template>
 

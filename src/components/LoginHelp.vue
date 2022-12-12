@@ -1,32 +1,26 @@
 <script setup lang="ts">
 import { event } from "quasar";
 import { watch } from "vue";
+import { useAuthStore } from "../stores/auth";
 
 const props = defineProps({
   ["messageTitle"]: {
     type: String,
   },
-  ["messageModal"]: {
-    type: Boolean,
-  },
+
   ["message"]: {
     type: String,
   },
 });
 
-let modal = props.messageModal;
-watch(()=> props.messageModal, ()=>{
-  modal = props.messageModal;
-})
+const useAuth = useAuthStore();
+
 const emit = defineEmits(["event"]);
-const hello = () => {
-  console.log("hello");
-};
 </script>
 
 <template>
   <q-dialog
-    v-model="modal"
+    v-model="useAuth.helpModal"
     transition-show="scale"
     transition-hide="scale"
     persistent
@@ -43,8 +37,7 @@ const hello = () => {
       class="exit-div"
       @click="
         () => {
-          emit('event');
-          hello();
+          useAuth.helpModal = !useAuth.helpModal;
         }
       "
     ></div>
