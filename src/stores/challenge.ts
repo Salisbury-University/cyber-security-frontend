@@ -139,6 +139,14 @@ export const useChallengeStore = defineStore("challenge", {
     },
 
     /**
+     * Set completion status for challenge
+     * @param completionStatus status
+     */
+    setStatus(completionStatus: string): void {
+      this.status = completionStatus;
+    },
+
+    /**
      * Grabs info for challenge
      */
     setChallenge(): void {

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useChallengeStore } from "../stores/challenge";
 
@@ -7,6 +8,16 @@ const route = useRoute();
 const title = route.params.title;
 useChallenge.setChallenge();
 useChallenge.getChallenge(title);
+const isComplete = ref(false);
+
+/**
+ * Toggles completion status of challenge
+ * @param completionStatus status
+ */
+function toggleCompletion(completionStatus: boolean) {
+  isComplete.value = !isComplete;
+  useChallenge.setStatus(isComplete);
+}
 </script>
 
 <template>
@@ -39,17 +50,29 @@ useChallenge.getChallenge(title);
           </q-card-section>
 
           <q-card-section>
-            Time Limit:
-            <span style="color: black">{{ useChallenge.timeLimit[0] }}</span>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Difficulty:
-            <span style="color: black">{{ useChallenge.difficulty[0] }} </span>
+            <span
+              >Time Limit:
+              <span style="color: black">{{
+                useChallenge.timeLimit[0]
+              }}</span></span
+            >
+            <span style="margin-left: 15px"
+              >Difficulty:
+              <span style="color: black">{{
+                useChallenge.difficulty[0]
+              }}</span></span
+            >
           </q-card-section>
 
           <q-card-section>
             <span
-              ><q-btn id="vmBtn"
-                >Launch VM<q-icon name="settings" style="left: 6px" /></q-btn
-            ></span>
+              ><q-btn
+                id="completeBtn"
+                :style="{ 'background-color': isComplete ? '#2e9cca' : '' }"
+                @click="isComplete = !isComplete"
+                >{{ isComplete ? "Complete" : "Mark as Complete" }}</q-btn
+              ></span
+            >
             <!-- create v-if here for displaying start or continue btn -->
             <q-btn class="statusBtn">Start</q-btn>
           </q-card-section>
@@ -89,17 +112,18 @@ useChallenge.getChallenge(title);
 
 .statusBtn {
   background-color: green;
-  color: white;
+  color: black;
 }
 
-#vmBtn {
+#completeBtn {
   background-color: #797373;
   color: black;
   font-weight: bold;
   font-size: 13px;
-  width: 145px;
+  width: 185px;
+  height: 35px;
   left: 115px;
-  top: 20px;
+  top: 18px;
   position: absolute;
 }
 </style>
