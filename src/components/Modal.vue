@@ -17,11 +17,6 @@ const exit = () => {
   useAuth.setUsername("");
   useAuth.setPassword("");
 };
-let modal = props.loginModal;
-console.log(modal);
-watch(()=> props.loginModal, ()=>{
-  modal = props.loginModal;
-})
 
 const passwordForgot = ref(false);
 
@@ -33,7 +28,7 @@ const changeHelpToggle = () => {
 <template>
   <div class="q-pa-md q-gutter-sm">
     <q-dialog
-      v-model="modal"
+      v-model="useAuth.loginModal"
       persistent
       transition-show="scale"
       transition-hide="scale"
@@ -116,6 +111,7 @@ const changeHelpToggle = () => {
     :message-modal="passwordForgot"
     message="Please contact your system administrator for furthur help"
     @event="changeHelpToggle()"
+    @click="changeHelpToggle()"
   ></LoginHelp>
 </template>
 

@@ -172,7 +172,7 @@ onMounted(() => {
       </q-drawer>
       <router-view />
     </q-layout>
-    <Modal :loginModal="useAuth.loginModal" @event="toggleModal()" />
+    <Modal @event="toggleModal()"/>
   </div>
 </template>
 
