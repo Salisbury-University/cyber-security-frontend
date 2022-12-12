@@ -6,7 +6,6 @@ import { useChallengeStore } from "../stores/challenge";
 const useChallenge = useChallengeStore();
 const route = useRoute();
 const title = route.params.title;
-useChallenge.setChallenge();
 useChallenge.getChallenge(title);
 const isComplete = ref(false);
 
