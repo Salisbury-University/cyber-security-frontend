@@ -75,7 +75,10 @@ function toggleCompletion(completionStatus: boolean) {
               ></span
             >
             <!-- Enable/Disable start btn based on login status -->
-            <q-btn class="statusBtn" :disable="!useAuth.persistence.loginStatus"
+            <q-btn
+              class="statusBtn"
+              @click="useChallenge.startVM(useChallenge.persistence.name[0])"
+              :disable="!useAuth.persistence.loginStatus"
               >Start</q-btn
             >
           </q-card-section>
