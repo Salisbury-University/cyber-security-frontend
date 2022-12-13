@@ -250,16 +250,17 @@ export const useChallengeStore = defineStore("challenge", {
 
           // Sort the weekly
           for (let i = 0; i < data.length; i++) {
+            console.log(data[i])
             user.push(data[i].user);
             exerciseTitle.push(data[i].exerciseTitle);
             status.push(data[i].status);
             timeStart.push(data[i].timeStart);
-            for (let j = 0; j < data[i].category.length; j++) {
-              category.push(data[i].category[j]);
+            for (let j = 0; j < data[i].metadata.category.length; j++) {
+              category.push(data[i].metadata.category[j]);
             }
-            difficulty.push(data[i].difficulty);
-            timelimit.push(data[i].timelimit);
-            vm.push(data[i].vm);
+            difficulty.push(data[i].metadata.difficulty);
+            timelimit.push(data[i].metadata.timelimit);
+            vm.push(data[i].metadata.vm);
           }
 
           function frequent(arr: Array<any>): {
