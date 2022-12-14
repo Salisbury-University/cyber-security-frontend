@@ -18,6 +18,7 @@ export const useChallengeStore = defineStore("challenge", {
           Authorization: "",
         },
         status: [],
+        content: [],
         challengeListSize: 0,
         weekly: {},
       }),
@@ -164,7 +165,6 @@ export const useChallengeStore = defineStore("challenge", {
             http()
               .get("/api/v1/exercise/".concat(info[i]))
               .then((response) => {
-                const status = response.data.status;
                 const metadata = response.data.metadata;
 
                 // store individual exercise info in name arr, timeLmit arr, etc.
@@ -176,8 +176,20 @@ export const useChallengeStore = defineStore("challenge", {
                 this.persistence.image[i] = metadata.image;
                 this.persistence.difficulty[i] = metadata.difficulty;
                 this.persistence.categories[i] = metadata.categories;
-                this.persistence.status[i] = status.status;
+                this.persistence.content[i] = response.data.content;
               });
+            if(useAuthStore().getLoginStatus){
+              http()
+              .get("/api/v1/exercise/".concat(info[i],"/status"),{
+                  headers: {
+                    Authorization: useAuthStore().persistence.header.Authorization,
+                  },
+              }).then((res)=>{
+                console.log(res.data)
+                this.persistence.status[i] = res.data;
+              })
+
+            }
           }
         });
     },
@@ -199,6 +211,7 @@ export const useChallengeStore = defineStore("challenge", {
           this.persistence.difficulty[0] = metadata.difficulty;
           this.persistence.categories[0] = metadata.categories;
           this.persistence.status[0] = status.status;
+          this.persistence.content[0] = response.data.content;
         })
       },
       
@@ -213,9 +226,27 @@ export const useChallengeStore = defineStore("challenge", {
             },
           }
         )
+        .catch((err)=>{
+          console.log(err)
+        })
         .then((res) => {
           console.log(res);
+          this.getStatus(title);
         });
+    },
+
+    stopVM(title:string): void{
+      http()
+        .get(
+          "/api/v1/vm/".concat(title, "/terminate"),
+          {
+            headers: {
+              Authorization: useAuthStore().persistence.header.Authorization,
+            },
+          }
+        ).then((res)=>{
+          console.log(res)
+        })
     },
 
     getStatus(title: string): void {
@@ -228,6 +259,21 @@ export const useChallengeStore = defineStore("challenge", {
         .then((res) => {
           console.log(res);
         });
+    },
+
+    postStatus(title: string): void {
+      http()
+        .post("/api/v1/exercise/".concat(title, "/status"),{
+          status: "completed"
+        }, {
+          headers: {
+            Authorization: useAuthStore().persistence.header.Authorization,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+
     },
 
     getWeekly(): void {

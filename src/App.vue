@@ -25,6 +25,8 @@
   --menu-color: black;
   --menu-bg: #e5e5e5;
   --menu-hover: rgb(74, 73, 73);
+  --login-font: black;
+  --login-focus: black;
 }
 
 /* Darkmode css */
@@ -51,5 +53,7 @@
   --menu-bg-secondary: #125a79;
   --menu-hover: #25274d;
   --btn: #464866;
+  --login-font: black;
+  --login-focus: white;
 }
 </style>

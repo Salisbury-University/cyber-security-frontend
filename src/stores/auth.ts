@@ -123,7 +123,7 @@ export const useAuthStore = defineStore("auth", {
           password: this.password,
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           this.setToken(res.data.token);
           this.setAuthorizationHeader(false);
           this.setLoginStatus(true);
@@ -144,7 +144,7 @@ export const useAuthStore = defineStore("auth", {
       http()
         .post("api/v1/auth/logout")
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           this.setToken("");
           this.setLoginStatus(false);
           this.setAuthorizationHeader(true);
@@ -210,7 +210,7 @@ export const useAuthStore = defineStore("auth", {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           const data = res.data.preference;
           this.persistence.darkmode = data.darkmode;
         });

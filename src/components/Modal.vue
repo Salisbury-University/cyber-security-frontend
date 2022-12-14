@@ -121,13 +121,13 @@ const changeHelpToggle = () => {
     var(--menu-bg-secondary)
   );
   border-radius: 40px !important;
-  width: 400px;
+  min-width: 400px;
   height: 500px;
   overflow: hidden;
 }
 
 .login-txt {
-  color: var(--q-accent);
+  color: var(--login-font);
   text-align: center;
   font-size: 45px;
 }
@@ -143,14 +143,17 @@ const changeHelpToggle = () => {
   margin: 0 auto 20px auto;
   background-color: var(--input-bg);
   border-radius: 28px;
-  color: var(--q-accent);
+  color: var(--login-font);
 }
 
 .bg-focusedInput {
   background-color: var(--q-primary) !important;
-  color: var(--q-accent);
+  color: var(--login-focus);
 }
 
+.q-field--standout.q-field--highlighted .q-field__native{
+  color: var(--login-focus);
+}
 .login-fail {
   visibility: hidden;
   width: 100%;

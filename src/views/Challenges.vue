@@ -178,7 +178,7 @@ function isUnique(category: string, index: number) {
   <!-- Show completed challenges -->
   <ul v-else-if="showCompletedChallenges">
     <div v-for="i in useChallenge.persistence.challengeListSize" :key="i">
-      <div v-if="useChallenge.persistence.status[i] != 'complete'">
+      <div v-if="useChallenge.persistence.status[i-1] != 'completed'">
         <div></div>
       </div>
       <div v-else><ChallengeItem :challengeIndex="i" /></div>
