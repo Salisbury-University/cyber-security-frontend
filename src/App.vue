@@ -31,7 +31,7 @@
 
 /* Darkmode css */
 .body--dark {
-  --q-primary: #25274d;
+  --q-primary: rgb(216, 216, 216);
   --q-secondary: #3b3d70;
   --q-accent: white;
 
@@ -54,6 +54,6 @@
   --menu-hover: #25274d;
   --btn: #464866;
   --login-font: black;
-  --login-focus: white;
+  --login-focus: black;
 }
 </style>

@@ -154,6 +154,13 @@ const changeHelpToggle = () => {
 .q-field--standout.q-field--highlighted .q-field__native{
   color: var(--login-focus);
 }
+
+.q-field--dark .q-field__native{
+  color: var(--login-font)
+}
+.q-field--dark:not(.q-field--highlighted) .q-field__label, .q-field--dark .q-field__marginal, .q-field--dark .q-field__bottom{
+  color:var(--login-font)
+}
 .login-fail {
   visibility: hidden;
   width: 100%;
