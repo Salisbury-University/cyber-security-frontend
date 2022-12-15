@@ -40,10 +40,13 @@ function toggleCompletion(completionStatus: boolean) {
           <q-card-section>
             {{ useChallenge.persistence.description[0] }}
           </q-card-section>
-          <q-card-section>
+          <q-card-section style="display: flex; gap: 10px; flex-direction: row;">
             Categories:
-            <span style="color: #2e9cca">{{ useChallenge.persistence.categories[0] }}
-            </span>
+            <div v-for="i in useChallenge.persistence.categories[0]" >
+              <span style="color: #2e9cca; text-decoration: underline;">
+                {{i}}
+              </span>
+            </div>
           </q-card-section>
 
           <q-card-section>

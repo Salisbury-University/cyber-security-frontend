@@ -2,8 +2,11 @@ import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import http from "../http";
 import { useQuasar } from "quasar";
+import { getCurrentInstance } from "vue";
+import { useChallengeStore } from "./challenge";
 
 const $q = useQuasar();
+const instance = getCurrentInstance();
 
 export const useAuthStore = defineStore("auth", {
   state: () => {
@@ -130,6 +133,8 @@ export const useAuthStore = defineStore("auth", {
           this.setModalState(false);
           this.setUsername("");
           this.setPassword("");
+          // Force update
+          instance?.proxy?.$forceUpdate();
         })
         .catch((e) => {
           document.getElementById("login-fail")!.style.visibility = "visible";
@@ -141,6 +146,11 @@ export const useAuthStore = defineStore("auth", {
       this.setToken("");
       this.setAuthorizationHeader(true);
       this.setLoginStatus(false);
+      // Reset status and refresh
+      for(let i = 0; i < useChallengeStore().persistence.status.length; i++){
+        useChallengeStore().persistence.status[i] = "incomplete";
+      }
+      instance?.proxy?.$forceUpdate();
       http()
         .post("api/v1/auth/logout")
         .then((res) => {
@@ -148,6 +158,12 @@ export const useAuthStore = defineStore("auth", {
           this.setToken("");
           this.setLoginStatus(false);
           this.setAuthorizationHeader(true);
+
+            // Reset status
+          for(let i = 0; i < useChallengeStore().persistence.status.length; i++){
+            useChallengeStore().persistence.status[i] = "incomplete";
+          }
+          instance?.proxy?.$forceUpdate();
         });
     },
 

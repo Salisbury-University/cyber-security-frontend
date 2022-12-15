@@ -72,7 +72,7 @@ const weekly = useChallenge.persistence.weekly;
 }
 
 .q-card {
-  width: 300px;
+  width: 250px;
   margin: 20px;
 }
 
@@ -80,5 +80,6 @@ const weekly = useChallenge.persistence.weekly;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
